@@ -10,11 +10,11 @@
                 </v-card-subtitle>
                 <v-card-text>
                     <v-form>
-                        <v-text-field
-                            hide-details="auto" :error="checkErrors('password')" :error-messages="errors.password"
+                        <v-text-field class="mb-2"
+                            hide-details="auto" :error="checkErrors('password')" :error-messages="errors.password" persistent-hint
                             outlined dense label="New Password" name="new_password" type="password" v-model="form.password"></v-text-field>
-                        <v-text-field
-                            hide-details="auto" :error="checkErrors('new_password')" :error-messages="errors.new_password"
+                        <v-text-field class="mb-2"
+                            hide-details="auto" :error="checkErrors('new_password')" :error-messages="errors.new_password" persistent-hint
                             outlined dense label="Repeat New Password" name="password_confirmation" type="password" v-model="form.password_confirmation"></v-text-field>
                     </v-form>
                     <v-btn dark @click="updatePassword">

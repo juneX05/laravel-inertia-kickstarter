@@ -7,15 +7,15 @@
                 </v-card-title>
                 <v-card-text>
                     <v-form>
-                        <v-text-field
+                        <v-text-field class="mb-3"
                             hide-details="auto" :error="checkErrors('name')" :error-messages="formErrors.name"
                             outlined dense label="User Name" name="name" type="text" v-model="form.name"></v-text-field>
 
-                        <v-text-field
+                        <v-text-field class="mb-3"
                             hide-details="auto" :error="checkErrors('email')" :error-messages="formErrors.email"
                             outlined dense label="User Email" name="email" type="email" v-model="form.email"></v-text-field>
                     </v-form>
-                    <v-btn @click="updateProfileInformation">
+                    <v-btn dark @click="updateProfileInformation">
                         Update
                     </v-btn>
                 </v-card-text>

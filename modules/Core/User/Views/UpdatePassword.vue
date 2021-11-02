@@ -7,17 +7,17 @@
                 </v-card-title>
                 <v-card-text>
                     <v-form>
-                        <v-text-field
+                        <v-text-field class="mb-3"
                             hide-details="auto" :error="checkErrors('current_password')" :error-messages="formErrors.current_password"
                             outlined dense label="Current Password" name="current_password" type="password" v-model="form.current_password"></v-text-field>
-                        <v-text-field
+                        <v-text-field class="mb-3"
                             hide-details="auto" :error="checkErrors('password')" :error-messages="formErrors.password"
                             outlined dense label="New Password" name="new_password" type="password" v-model="form.password"></v-text-field>
-                        <v-text-field
+                        <v-text-field class="mb-3"
                             hide-details="auto" :error="checkErrors('password')" :error-messages="formErrors.password"
                             outlined dense label="Repeat New Password" name="password_confirmation" type="password" v-model="form.password_confirmation"></v-text-field>
                     </v-form>
-                    <v-btn @click="updatePassword">
+                    <v-btn dark @click="updatePassword">
                         Change Password
                     </v-btn>
                 </v-card-text>

@@ -34,12 +34,12 @@
                         <v-form>
                             <v-text-field class="mb-3"
                                 hide-details="auto" :error="checkErrors('name')" :error-messages="errors.name"
-                                hint="Includes alphabets and dots(.) ex permission.create"
+                                hint="Includes alphabets and dots(.) ex permission.create"  persistent-hint
                                 outlined dense label="Permission Name" name="name" type="text" v-model="form.name"></v-text-field>
 
                             <v-text-field class="mb-3"
                                 hide-details="auto" :error="checkErrors('title')" :error-messages="errors.title"
-                                hint="A general name to make user understand the goal of the permission"
+                                hint="A general name to make user understand the goal of the permission"  persistent-hint
                                 outlined dense label="Permission Title" name="title" type="text" v-model="form.title"></v-text-field>
                         </v-form>
                     </v-card-text>

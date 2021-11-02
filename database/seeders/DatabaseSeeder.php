@@ -3,8 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Modules\Core\Permissions\Seeders\PermissionsSeeder;
 use Modules\Core\Users\Seeders\UsersSeeder;
+use Modules\Core\Permissions\Seeders\PermissionsSeeder;
+use Modules\System\SystemSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,6 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
                         UsersSeeder::class,
                         PermissionsSeeder::class,
+                        SystemSeeder::class,
                     ]);
     }
 }

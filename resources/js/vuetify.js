@@ -14,22 +14,23 @@ export default new Vuetify({
     // icons: {
     //     iconfont: 'mdi'
     // },
-    theme: {
-        themes: {
-            light: {
-                primary: '#00551E',
-                secondary: '#3C8750',
-                tertiary: '#EEEEEE',
-                accent: '#69FFF1',
-                info: '#63D471',
-                success: '#4CAF50',
-                warning: '#FFC107',
-                error: '#FF5252',
-                danger: '#FF5252',
-            },
-            dark: {
-                primary: '#321321'
-            }
-        }
-    }
+    // theme: {
+    //     themes: {
+    //         light: {
+    //             primary: '#00551E',
+    //             secondary: '#3C8750',
+    //             tertiary: '#EEEEEE',
+    //             accent: '#69FFF1',
+    //             info: '#63D471',
+    //             success: '#4CAF50',
+    //             warning: '#FFC107',
+    //             error: '#FF5252',
+    //             danger: '#FF5252',
+    //         },
+    //         dark: {
+    //             primary: '#321321'
+    //         }
+    //     }
+    // },
+    theme: {dark: true}
 })

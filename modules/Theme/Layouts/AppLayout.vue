@@ -22,7 +22,7 @@
             <v-divider></v-divider>
 
             <v-list dense>
-                <inertia-link as="v-list-item" :href="item.link" v-for="item in items"
+                <inertia-link as="v-list-item" :href="item.link" v-for="item in $page.props.menus"
                               :key="item.title" v-if="!item.permission || $page.props.current_user_permissions.includes(item.permission)"
                               link
                               @click = "manageDrawer">

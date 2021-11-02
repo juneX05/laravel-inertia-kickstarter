@@ -17,4 +17,4 @@ use Inertia\Inertia;
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('System/Dashboard/Views/Dashboard');
-})->name('dashboard');
+})->name('viewDashboard');

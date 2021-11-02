@@ -3,7 +3,9 @@
 
     <v-app id="inspire">
         <v-app-bar app dense>
-            <v-toolbar-title>ULIPO TUPO</v-toolbar-title>
+            <v-toolbar-title>
+              {{$page.props.APP_NAME}}
+            </v-toolbar-title>
             <v-spacer></v-spacer>
 
 
@@ -43,7 +45,7 @@
         </v-main>
 
         <v-footer app>
-            Copyright &copy; 2021 ULIPO TUPO
+            Copyright &copy; 2021 {{$page.props.APP_NAME}}
         </v-footer>
     </v-app>
 </template>

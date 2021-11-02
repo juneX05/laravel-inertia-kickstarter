@@ -47,7 +47,7 @@
                             :error-messages="errors.user_id"
                         ></v-select>
 
-                        <div v-if="form.user_id" style="min-height: 30vh; overflow-x: hidden">
+                        <div v-if="form.user_id" style="max-height: 35vh; overflow-x: hidden">
                             <v-progress-circular v-if="permissions_loading"
                                                  indeterminate
                                                  color="primary"

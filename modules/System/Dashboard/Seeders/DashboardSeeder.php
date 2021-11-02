@@ -1,12 +1,12 @@
 <?php
 
-namespace Modules\Core\Permissions\Seeders;
+namespace Modules\System\Dashboard\Seeders;
 
 use Modules\Core\Permissions\Models\Permission;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class PermissionsSeeder extends Seeder
+class DashboardSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,18 +15,14 @@ class PermissionsSeeder extends Seeder
      */
     public function run()
     {
+        $this->setUpPermissions();
+    }
+
+    private function setUpPermissions() {
         $permissions = [
-            ['name' => 'permissions.view', 'title' => 'View Permissions',],
-            ['name' => 'permission.create', 'title' => 'Create permission',],
-            ['name' => 'permission.manage.users', 'title' => 'manage user permission',],
-            ['name' => 'permission.edit', 'title' => 'Edit permission',],
-            ['name' => 'permission.delete', 'title' => 'Delete permission',],
-
-
-//            ['name' => 'questions.view', 'title' => 'View Questions',],
+            ['name' => 'dashboard.view', 'title' => 'View Dashboard',],
         ];
         DB::table('permissions')->insert($permissions);
-
 
         foreach ($permissions as $permission) {
             DB::table('user_permissions')
