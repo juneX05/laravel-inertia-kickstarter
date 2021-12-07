@@ -32,5 +32,5 @@ export default new Vuetify({
     //         }
     //     }
     // },
-    theme: {dark: true}
+    theme: {light: true}
 })

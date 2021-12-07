@@ -17,9 +17,7 @@ class SystemSeeder extends Seeder
     public function run()
     {
         $this->call([
-                        ProjectsSeeder::class,
                         DashboardSeeder::class,
-                        GeneratorSeeder::class,
                     ]);
     }
 }

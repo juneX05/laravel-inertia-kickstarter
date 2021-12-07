@@ -1,67 +1,24 @@
 <template>
-    <!-- App.vue -->
+  <website-layout>
 
-    <v-app id="inspire">
-        <v-app-bar app dense>
-            <v-toolbar-title>
-              {{$page.props.APP_NAME}}
-            </v-toolbar-title>
-            <v-spacer></v-spacer>
+    <home-hero />
+    <home-details />
+  </website-layout>
 
-
-            <inertia-link href="/dashboard" class="v-btn--text" style="text-decoration: none" v-if="$page.props.user">
-                <v-btn text>
-                    <v-icon>account_circle</v-icon> {{ $page.props.user.name }}
-                </v-btn>
-            </inertia-link>
-
-<!--            <inertia-link-->
-<!--                v-if="$page.props.user" href="/dashboard"-->
-<!--                class="text-sm text-gray-700"-->
-<!--                style="text-decoration: none"-->
-<!--            >-->
-<!--                <v-icon>account_circle</v-icon>-->
-<!--                {{ $page.props.user.name }}-->
-<!--            </inertia-link>-->
-
-            <template v-else>
-                <inertia-link :href="route('login')" class="text-sm text-gray-700 underline">
-                    Login
-                </inertia-link>
-
-                <inertia-link v-if="canRegister" :href="route('register')" class="ml-4 text-sm text-gray-700 underline">
-                    Register
-                </inertia-link>
-            </template>
-        </v-app-bar>
-
-        <!-- Sizes your content based upon application components -->
-        <v-main>
-
-            <!-- Provides the application the proper gutter -->
-            <v-container fluid>
-
-            </v-container>
-        </v-main>
-
-        <v-footer app>
-            Copyright &copy; 2021 {{$page.props.APP_NAME}}
-        </v-footer>
-    </v-app>
 </template>
 
 <script>
+import WebsiteLayout from "@/Theme/Layouts/WebsiteLayout";
+import HomeHero from "@/System/Welcome/Views/components/HomeHero";
+import HomeDetails from "@/System/Welcome/Views/components/HomeDetails";
 export default {
-    components: {},
-    data: () => ({
-        drawer: null
-    }),
+  name: 'Welcome',
+  components: {HomeDetails, HomeHero, WebsiteLayout},
+  data() {
+    return {
 
-    props: {
-        canLogin: Boolean,
-        canRegister: Boolean,
-        laravelVersion: String,
-        phpVersion: String,
     }
-}
+  }
+};
 </script>
+
