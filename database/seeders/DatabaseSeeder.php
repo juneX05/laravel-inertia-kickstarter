@@ -3,9 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Modules\Core\Users\Seeders\UsersSeeder;
-use Modules\Core\Permissions\Seeders\PermissionsSeeder;
-use Modules\System\SystemSeeder;
+use Application\Modules\SystemSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,8 +16,6 @@ class DatabaseSeeder extends Seeder
     {
         //\App\Models\User::factory(10)->create();
         $this->call([
-                        UsersSeeder::class,
-                        PermissionsSeeder::class,
                         SystemSeeder::class,
                     ]);
     }

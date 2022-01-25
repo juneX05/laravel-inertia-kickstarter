@@ -1,0 +1,9 @@
+{
+  "system_management": {
+    "title": "System Management",
+    "icon": "mdi-tag",
+    "link": "#",
+    "permissions": "system_management.view",
+    "position": 1
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "__moduleNamePluralLower__": {
+    "title": "__moduleNamePlural__",
+    "icon": "__moduleIcon__",
+    "link": "view__moduleNamePlural__",
+    "permissions": [
+      "__moduleNamePluralLower__.view"
+    ],
+    "position": 6
+  }
+}

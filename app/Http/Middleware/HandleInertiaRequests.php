@@ -4,9 +4,9 @@ namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
 use Inertia\Middleware;
-use Modules\Core\Users\Models\UserPermission;
+use Application\Modules\Core\Menus\Models\Menu;
+use Application\Modules\Core\Users\Models\UserPermission;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -42,25 +42,11 @@ class HandleInertiaRequests extends Middleware
         return array_merge(parent::share($request), [
             'current_user_permissions' => UserPermission::where(['user_id' => Auth::id(), 'status' => 1])->pluck('permission_name')->toArray(),
             'APP_NAME' => env('APP_NAME'),
-            'menus' => $this->getModuleMenus()
+            'sidebar_links' => Menu::all(),
+            'menu_keys' => Menu::getKeys(),
+            'error' => [],
         ]);
     }
 
-    private function getModuleMenus() {
-        $menus = [];
-        $core_directories = File::directories(base_path('modules/Core'));
-        $system_directories = File::directories(base_path('modules/System'));
-        $module_directories = array_merge($system_directories, $core_directories);
 
-        foreach ($module_directories as $directory) {
-            $menu_file = $directory . '/menu.php';
-            if (file_exists($menu_file)) {
-                $module_menu = require $menu_file;
-               $menus = array_merge($menus, $module_menu);
-            }
-        }
-
-//        dd($menus);
-        return $menus;
-    }
 }

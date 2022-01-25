@@ -1,0 +1,75 @@
+<template>
+  <app-layout>
+    <template #bread-crumbs>
+      <inertia-link :href="route('home')" style="text-decoration: none">
+        <v-icon size="16" style="margin-top: -2px">home</v-icon>
+      </inertia-link>
+      /
+      <inertia-link :href="route('view__moduleNamePlural__')" style="text-decoration: none">
+        __moduleNamePlural__ List
+      </inertia-link>
+      <span class="text-md">
+                / View view__moduleNameSingular__
+            </span>
+
+      <br/>
+      <inertia-link :href="route('view__moduleNamePlural__')" as="v-btn" class="mt-2" small
+                    style="text-decoration: none">
+        <v-icon>arrow_back</v-icon>
+        Back
+      </inertia-link>
+    </template>
+    <template #header>
+      <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        __moduleNamePlural__
+      </h2>
+    </template>
+
+    <v-row>
+      <v-col cols="12">
+        <v-card class="mt-2">
+          <v-card-text>
+            <inertia-link :href="route('edit__moduleNameSingular__',[this.__moduleNameSingularLower__.id])" as="v-btn"
+                          small>
+              Edit __moduleNameSingular__
+            </inertia-link>
+          </v-card-text>
+          <v-card-title>
+            <!--            {{ this.__moduleNameSingularLower__.name }}-->
+            __moduleNameSingular__
+          </v-card-title>
+          <v-card-text
+              v-for="(key, index) in Object.keys(__moduleNameSingularLower__)"
+              :key="index">
+            <b> {{ key }}: </b> {{ __moduleNameSingularLower__[key] }}
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+
+  </app-layout>
+</template>
+
+<script>
+import AppLayout from '@/Theme/Layouts/AppLayout'
+import __moduleNameSingular__Form from "@/System/__moduleNamePlural__/Views/__moduleNameSingularLower__Form";
+
+export default {
+  components: {
+    __moduleNameSingular__Form,
+    AppLayout,
+  },
+  props: ['errors', '__moduleNameSingularLower__',],
+  mounted() {
+    console.log(this.__moduleNameSingularLower__)
+  },
+  data() {
+    return {
+      drawer: null,
+      loading: false,
+    }
+  },
+  computed: {},
+  methods: {}
+}
+</script>

@@ -1,0 +1,9 @@
+{
+  "configurations": {
+    "title": "Configurations",
+    "icon": "mdi-tag",
+    "link": "viewConfigurations",
+    "permissions": "configurations.view",
+    "position": 3
+  }
+}

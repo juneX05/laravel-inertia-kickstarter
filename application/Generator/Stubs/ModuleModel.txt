@@ -1,0 +1,16 @@
+<?php
+
+namespace Application\Modules\__moduleType__\__moduleNamePlural__\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class __moduleNameSingular__ extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        __moduleFillableList__
+    ];
+
+}

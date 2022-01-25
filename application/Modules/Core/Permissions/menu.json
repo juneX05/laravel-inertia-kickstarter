@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "title": "Permissions",
+    "icon": "mdi-tag",
+    "link": "viewPermissions",
+    "permissions": "permissions.view",
+    "parent": "configurations",
+    "position": 10
+  }
+}

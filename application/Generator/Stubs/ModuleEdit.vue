@@ -1,0 +1,107 @@
+<template>
+  <app-layout>
+    <template #bread-crumbs>
+      <inertia-link :href="route('home')" style="text-decoration: none">
+        <v-icon size="16" style="margin-top: -2px">home</v-icon>
+      </inertia-link>
+      /
+      <inertia-link :href="route('view__moduleNamePlural__')" style="text-decoration: none">
+        __moduleNamePlural__ List
+      </inertia-link>
+      <span class="text-md">
+                / Edit __moduleNameSingular__
+            </span>
+
+      <br/>
+      <inertia-link :href="route('view__moduleNamePlural__')" as="v-btn" class="mt-2" small
+                    style="text-decoration: none">
+        <v-icon>arrow_back</v-icon>
+        Back
+      </inertia-link>
+    </template>
+    <template #header>
+      <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        __moduleNamePlural__
+      </h2>
+    </template>
+
+    <v-row>
+      <v-col cols="8">
+        <v-card class="mt-2">
+          <v-card-title>
+            EDIT __moduleNameSingular__
+          </v-card-title>
+          <v-card-text class="pb-0">
+            <v-form>
+              <v-row>
+                <v-col cols="12">
+                  <__moduleNameSingularLower__Form
+                      :errors="errors"
+                      :form="form"
+                  ></__moduleNameSingularLower__Form>
+                </v-col>
+              </v-row>
+
+
+            </v-form>
+          </v-card-text>
+          <v-card-actions class="pt-0">
+            <v-btn :loading="loading" dark @click="submit">Update __moduleNameSingular__</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+
+    </v-row>
+
+  </app-layout>
+</template>
+
+<script>
+import AppLayout from '@/Theme/Layouts/AppLayout'
+import __moduleNameSingular__Form from "@/__moduleType__/__moduleNamePlural__/Views/__moduleNameSingularLower__Form";
+
+export default {
+  components: {
+    __moduleNameSingular__Form,
+    AppLayout,
+  },
+  props: ['errors', '__moduleNameSingularLower__',],
+  mounted() {
+    console.log(this.__moduleNameSingularLower__)
+  },
+  data() {
+    return {
+      drawer: null,
+      form: this.$inertia.form({
+        __moduleEditColumns__
+      }),
+      loading: false,
+    }
+  },
+  computed: {},
+  methods: {
+    submit() {
+      this.loading = true;
+      this.form
+          .transform(data => ({
+            ...data,
+          }))
+          .post(this.route('update__moduleNameSingular__'), {
+            onSuccess: () => {
+              this.form.reset();
+              this.$inertia.visit(route('view__moduleNamePlural__'))
+            },
+            onError: () => {
+              console.log(this.errors)
+            },
+            onFinish: () => {
+              this.loading = false;
+            },
+          })
+    },
+    checkErrors(key) {
+      return this.errors[key] !== undefined;
+    }
+  }
+}
+</script>

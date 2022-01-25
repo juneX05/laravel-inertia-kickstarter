@@ -1,0 +1,8 @@
+      <text-input
+        :form="form"
+        :errors="errors"
+        :field="'__field__'"
+        :hint="'__hint__'"
+        :label="'__label__'"
+        :type="'__type__'"
+      ></text-input>

@@ -1,0 +1,99 @@
+<?php
+
+namespace Application\Modules\__moduleType__\__moduleNamePlural__\Controllers;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Validator;
+use Inertia\Inertia;
+use Application\Modules\__moduleType__\__moduleNamePlural__\Models\__moduleNameSingular__;
+
+class __moduleNameSingular__Controller extends Controller
+{
+    public function index()
+    {
+        abort_if(Gate::denies('__moduleNamePluralLower__.view'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $data = __moduleNameSingular__::all();
+
+        return $this->render('Index', ['data' => $data]);
+    }
+
+    public function render($component, $props)
+    {
+        return Inertia::render('__moduleType__/__moduleNamePlural__/Views/' . $component, $props);
+    }
+
+    public function create()
+    {
+        abort_if(Gate::denies('__moduleNameSingularLower__.create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $data = [];
+        $data['extras'] = [];
+
+        return $this->render('Create', $data);
+    }
+
+    public function edit($id)
+    {
+        abort_if(Gate::denies('__moduleNameSingularLower__.edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $data = [];
+        $data['__moduleNameSingularLower__'] = __moduleNameSingular__::where('id', $id)->first();
+
+        return $this->render('Edit', $data);
+    }
+
+    public function show($id)
+    {
+        abort_if(Gate::denies('__moduleNameSingularLower__.view'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $data = [];
+        $data['__moduleNameSingularLower__'] = __moduleNameSingular__::where('id', $id)->first();
+
+        return $this->render('Detail', $data);
+    }
+
+    public function store(Request $request)
+    {
+        abort_if(Gate::denies('__moduleNameSingularLower__.create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $rules = [__moduleCreateRules__];
+        $data = $request->all();
+        Validator::make($data, $rules)->validate();
+
+        $data = $request->all();
+        $__moduleNameSingularLower__ = __moduleNameSingular__::create($data);
+
+        return redirect()->back()
+            ->with('message', '__moduleNameSingularLower__ Created Successfully.');
+    }
+
+    public function update(Request $request)
+    {
+        abort_if(Gate::denies('__moduleNameSingularLower__.edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $rules = ['id' => ['required'], __moduleUpdateRules__];
+        Validator::make($request->all(), $rules)->validate();
+
+        if ($request->has('id')) {
+            __moduleNameSingular__::find($request->input('id'))->update($request->all());
+
+            return redirect()->back()
+                ->with('message', '__moduleNameSingular__ Updated Successfully.');
+        }
+    }
+
+    public function destroy(Request $request)
+    {
+        abort_if(Gate::denies('__moduleNameSingularLower__.delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        if ($request->has('id')) {
+            __moduleNameSingular__::find($request->input('id'))->delete();
+
+            return redirect()->back();
+        }
+    }
+}

@@ -1,0 +1,12 @@
+      <select-input
+        :label="'__label__'"
+        :hint="'__hint__'"
+        :field="'__field__'"
+        :errors="errors"
+        :form="form"
+        :items="__itemsData__"
+        :item_id="'id'"
+        :item_name="'name'"
+        :multiple="__multiple__"
+        :placeholder="'__placeholder__'"
+      ></select-input>

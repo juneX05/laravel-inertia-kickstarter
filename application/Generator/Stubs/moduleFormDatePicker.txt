@@ -1,0 +1,8 @@
+      <date-picker
+        :form="form"
+        :errors="errors"
+        :field="'__field__'"
+        :hint="'__hint__'"
+        :label="'__label__'"
+        :disabled="false"
+      ></date-picker>

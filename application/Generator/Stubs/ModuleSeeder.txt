@@ -1,0 +1,45 @@
+<?php
+
+namespace Application\Modules\__moduleType__\__moduleNamePlural__\Seeders;
+
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+
+class __moduleNamePlural__Seeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        $this->setUpPermissions();
+
+//        $__moduleNamePluralLower__ = [
+//            ''
+//        ];
+//        DB::table('__moduleNamePluralLower__')->insert($__moduleNamePluralLower__);
+    }
+
+    private function setUpPermissions()
+    {
+        $permissions = [
+            ['name' => '__moduleNamePluralLower__.view', 'title' => 'View __moduleNamePlural__',],
+            ['name' => '__moduleNameSingularLower__.view', 'title' => 'View __moduleNameSingular__',],
+            ['name' => '__moduleNameSingularLower__.create', 'title' => 'Create __moduleNameSingular__',],
+            ['name' => '__moduleNameSingularLower__.edit', 'title' => 'Edit __moduleNameSingular__',],
+            ['name' => '__moduleNameSingularLower__.delete', 'title' => 'Delete __moduleNameSingular__',],
+        ];
+        DB::table('permissions')->insert($permissions);
+
+        foreach ($permissions as $permission) {
+            DB::table('user_permissions')
+                ->insert([
+                    'user_id' => 1,
+                    'permission_name' => $permission['name'],
+                    'status' => 1,
+                ]);
+        }
+    }
+}

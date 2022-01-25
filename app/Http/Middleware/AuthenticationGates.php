@@ -5,8 +5,8 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use Modules\Core\Permissions\Models\Permission;
-use Modules\Core\Users\Models\UserPermission;
+use Application\Modules\Core\Permissions\Models\Permission;
+use Application\Modules\Core\Users\Models\UserPermission;
 
 class AuthenticationGates
 {

@@ -1,0 +1,11 @@
+      <file-upload
+        :placeholder="'__placeholder__'"
+        :multiple="__multiple__"
+        :form="form"
+        :errors="errors"
+        :field="'__field__'"
+        :hint="'__hint__'"
+        :label="'__label__'"
+        :allowed_files="'__allowedFiles__'"
+        :prepend_icon="'__prepend_icon__'"
+      ></file-upload>
