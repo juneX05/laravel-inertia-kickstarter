@@ -1,0 +1,9 @@
+{
+  "dashboard": {
+    "title": "Dashboard",
+    "icon": "mdi-tag",
+    "link": "viewDashboard",
+    "permissions": "dashboard.view",
+    "position": 1
+  }
+}

@@ -1,9 +1,18 @@
 {
-  "system_management": {
-    "title": "System Management",
-    "icon": "mdi-tag",
+  "MENU": {
+    "title": "MENU",
+    "menu_type": "header",
+    "icon": "",
     "link": "#",
-    "permissions": "system_management.view",
-    "position": 1
+    "permissions": "",
+    "position": 2
+  },
+  "utilities": {
+    "title": "UTILITIES",
+    "menu_type": "header",
+    "icon": "",
+    "link": "#",
+    "permissions": "",
+    "position": 20
   }
 }

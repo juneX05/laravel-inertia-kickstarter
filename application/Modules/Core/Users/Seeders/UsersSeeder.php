@@ -21,13 +21,13 @@ class UsersSeeder extends Seeder
 
         User::create(
             [
-                'name' => 'Admin Manch',
-                'email' => 'adminmanch@gmail.com',
+                'name' => 'Admin',
+                'email' => 'admin@gmail.com',
                 'password' => Hash::make('secret'),
             ],
             [
-                'name' => 'Manager Manch',
-                'email' => 'managermanch@gmail.com',
+                'name' => 'Manager',
+                'email' => 'manager@gmail.com',
                 'password' => Hash::make('secret'),
             ]
         );

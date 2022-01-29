@@ -18,7 +18,12 @@ class Menu
 
     public static function getKeys()
     {
-        return self::$keys;
+        asort(self::$keys);
+        $keys = [];
+        foreach (self::$keys as $key => $value) {
+            $keys[] = $key;
+        }
+        return $keys;
     }
 
     private static function getModuleMenus()
@@ -45,23 +50,23 @@ class Menu
     private static function processSidebarMenus($key, $values)
     {
         $menus = [];
-        if (isset($values['parent']) && $values['parent'] != null) {
-            if (isset($menus[$values['parent']])) {
-                if (isset($menus[$values['parent']]['children'])) {
-                    $menus[$values['parent']]['children'][] = $values;
-                } else {
-                    $menus[$values['parent']]['children'] = [];
-                    $menus[$values['parent']]['children'][$key] = $values;
-                }
-            } else {
-                $menus[$values['parent']] = [];
-                $menus[$values['parent']]['children'] = [];
-                $menus[$values['parent']]['children'][$key] = $values;
-            }
-        } else {
-            $keys[] = $key;
+//        if (isset($values['parent']) && $values['parent'] != null) {
+//            if (isset($menus[$values['parent']])) {
+//                if (isset($menus[$values['parent']]['children'])) {
+//                    $menus[$values['parent']]['children'][] = $values;
+//                } else {
+//                    $menus[$values['parent']]['children'] = [];
+//                    $menus[$values['parent']]['children'][$key] = $values;
+//                }
+//            } else {
+//                $menus[$values['parent']] = [];
+//                $menus[$values['parent']]['children'] = [];
+//                $menus[$values['parent']]['children'][$key] = $values;
+//            }
+//        } else {
+//            $keys[] = $key;
             $menus[$key] = $values;
-        }
+//        }
 
         return $menus;
     }
@@ -70,9 +75,13 @@ class Menu
     {
         $menu = [];
         $menu['id'] = $key;
-        $menu['link_type'] = 'hard-link';
-        if (Route::has($values['link'])) {
-            $menu['link_type'] = 'route';
+        if (array_key_exists('menu_type',$values) && $values['menu_type'] == 'header') {
+            $menu['link_type'] = 'header';
+        } else {
+            $menu['link_type'] = 'hard-link';
+            if (Route::has($values['link'])) {
+                $menu['link_type'] = 'route';
+            }
         }
         return array_merge($values, $menu);
     }

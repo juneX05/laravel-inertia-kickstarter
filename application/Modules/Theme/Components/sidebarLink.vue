@@ -2,9 +2,11 @@
   <inertia-link
       :href="link"
       as="v-list-item" link
-      @click="manageDrawer">
+      @click="manageDrawer"
+
+  >
     <v-list-item-icon>
-      <v-icon>mdi-{{ icon }}</v-icon>
+      <v-icon>{{ icon }}</v-icon>
     </v-list-item-icon>
 
     <v-list-item-content>

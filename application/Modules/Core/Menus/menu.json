@@ -4,6 +4,6 @@
     "icon": "mdi-tag",
     "link": "viewMenus",
     "permissions": "menus.view",
-    "position": 9
+    "position": 21
   }
 }
