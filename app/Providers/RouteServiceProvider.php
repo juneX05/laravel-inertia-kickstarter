@@ -53,30 +53,7 @@ class RouteServiceProvider extends ServiceProvider
     }
 
     public function map() {
-//        $directories = Storage::allDirectories(public_path('modules'));
-        $core_directories = File::directories(base_path('application/Modules/Core'));
-        $system_directories = File::directories(base_path('application/Modules/System'));
-        $module_configurations = File::directories(base_path('application/Modules/Configurations'));
-        $configurations = File::directories(base_path('application/Modules/Configurations/SysConfigs/Tabs'));
-        $statuses = File::directories(base_path('application/Modules/Configurations/DevConfigs/Tabs'));
-        $module_directories = array_merge($system_directories, $core_directories, $statuses, $module_configurations, $configurations);
-
-        foreach ($module_directories as $directory) {
-            $web_route_file = $directory . '/Routes/web.php';
-            $api_route_file = $directory . '/Routes/api.php';
-            if (file_exists($web_route_file)) {
-                Route::middleware('web')
-                    ->namespace($this->namespace)
-                    ->group($web_route_file);
-            }
-
-            if (file_exists($api_route_file)) {
-                Route::middleware('api')
-                    ->namespace($this->namespace)
-                    ->group($api_route_file);
-            }
-
-        }
+        //
     }
 
     /**

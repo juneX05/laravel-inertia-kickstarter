@@ -21,16 +21,15 @@ class MenuController extends Controller
 
         $data = Menu::all(false);
 
-        $core_modules = File::directories(base_path('application/Modules/Core'));
-        $system_modules = File::directories(base_path('application/Modules/System'));
-        $routes = Route::getRoutes();
+        $modules = app('module_directories');
 
-        return $this->render('Index', [
+        $routes = Route::getRoutes();
+        $view_data = array_merge([
             'data' => $data,
             'routes' => $routes,
-            'core_modules' => $core_modules,
-            'system_modules' => $system_modules
-        ]);
+        ], $modules);
+
+        return $this->render('Index', $view_data);
     }
 
     public function render($component, $props) {
@@ -42,26 +41,49 @@ class MenuController extends Controller
 
         $menus = Menu::all(false);
 
-        $core_modules = array_map(function ($module) {
-            return str_replace(base_path('application/Modules/Core/'), '', $module);
-        }, File::directories(base_path('application/Modules/Core')));
-
-        $system_modules = array_map(function ($module) {
-            return str_replace(base_path('application/Modules/System/'), '', $module);
-        }, File::directories(base_path('application/Modules/System')));
+//        $core_modules = array_map(function ($module) {
+//            return str_replace(base_path('application/Modules/Core/'), '', $module);
+//        }, File::directories(base_path('application/Modules/Core')));
+//
+//        $system_modules = array_map(function ($module) {
+//            return str_replace(base_path('application/Modules/System/'), '', $module);
+//        }, File::directories(base_path('application/Modules/System')));
 
         $routes = Route::getRoutes()->get();
-
+        $modules = app('module_directories');
         $permissions = Permission::all();
 
-
-        return $this->render('Create', [
+        $view_data = array_merge([
             'menus' => $menus,
             'routes' => $routes,
-            'core_modules' => $core_modules,
-            'system_modules' => $system_modules,
             'permissions' => $permissions
+        ], $modules);
+
+        return $this->render('Create', $view_data);
+    }
+
+    public function managePositions() {
+        abort_if(Gate::denies('menu.manage_positions'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $menus = Menu::all(false);
+
+        return $this->render('ManagePositions', [
+            'menus' => $menus,
         ]);
+    }
+
+    public function updatePositions(Request $request) {
+        abort_if(Gate::denies('menu.manage_positions'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $data = Validator::make($request->all(), [
+            'menu_keys' => ['required', 'array'],
+        ])->validate();
+
+        $menu = new Menu();
+        $menu->updateMenuPositions($data['menu_keys']);
+
+        return redirect()->back()
+            ->with('message', 'Menus Created Successfully.');
     }
 
     public function edit($id) {

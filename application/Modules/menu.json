@@ -1,0 +1,18 @@
+{
+    "MENU": {
+        "title": "MENU",
+        "menu_type": "header",
+        "icon": "",
+        "link": "#",
+        "permissions": "",
+        "position": 2
+    },
+    "utilities": {
+        "title": "UTILITIES",
+        "menu_type": "header",
+        "icon": "",
+        "link": "#",
+        "permissions": "",
+        "position": 5
+    }
+}

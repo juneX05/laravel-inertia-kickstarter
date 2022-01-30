@@ -1,9 +1,9 @@
 {
-  "menus": {
-    "title": "Menus",
-    "icon": "mdi-tag",
-    "link": "viewMenus",
-    "permissions": "menus.view",
-    "position": 21
-  }
+    "menus": {
+        "title": "Menus",
+        "icon": "mdi-tag",
+        "link": "viewMenus",
+        "permissions": "menus.view",
+        "position": 8
+    }
 }

@@ -1,9 +1,9 @@
 {
-  "configurations": {
-    "title": "Configurations",
-    "icon": "mdi-tag",
-    "link": "viewConfigurations",
-    "permissions": "configurations.view",
-    "position": 3
-  }
+    "sys_configs": {
+        "title": "Configurations",
+        "icon": "mdi-tag",
+        "link": "viewSysConfigs",
+        "permissions": "sys_configs.view",
+        "position": 6
+    }
 }

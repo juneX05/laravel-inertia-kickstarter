@@ -1,0 +1,9 @@
+{
+    "developer": {
+        "title": "Developer",
+        "icon": "mdi-tag",
+        "link": "viewDevConfigs",
+        "permissions": "dev_configs.view",
+        "position": 7
+    }
+}

@@ -2,6 +2,8 @@
 
 namespace Application\Modules;
 
+use Application\Modules\Configurations\DevConfigs\Seeders\DevConfigsSeeder;
+use Application\Modules\Configurations\SysConfigs\Seeders\SysConfigsSeeder;
 use Application\Modules\Core\Menus\Seeders\MenusSeeder;
 use Application\Modules\Core\Permissions\Seeders\PermissionsSeeder;
 use Application\Modules\Core\Users\Seeders\UsersSeeder;
@@ -22,6 +24,8 @@ class SystemSeeder extends Seeder
             PermissionsSeeder::class,
             MenusSeeder::class,
             DashboardSeeder::class,
+            SysConfigsSeeder::class,
+            DevConfigsSeeder::class,
         ]);
     }
 }

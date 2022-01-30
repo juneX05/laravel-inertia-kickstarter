@@ -22,5 +22,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/menus/{id}/edit', [MenuController::class,'edit'])->name('editMenu');
     Route::post('/menus/delete', [MenuController::class,'destroy'])->name('deleteMenu');
     Route::post('/menus/update', [MenuController::class,'update'])->name('updateMenu');
+    Route::get('/menus/manage-positions', [MenuController::class,'managePositions'])->name('managePositions');
+    Route::post('/menus/update-positions', [MenuController::class,'updatePositions'])->name('updatePositions');
 
 });

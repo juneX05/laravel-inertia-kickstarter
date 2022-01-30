@@ -5,7 +5,7 @@ namespace Application\Modules\Configurations\SysConfigs\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class ConfigurationsSeeder extends Seeder
+class SysConfigsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -25,11 +25,11 @@ class ConfigurationsSeeder extends Seeder
     private function setUpPermissions()
     {
         $permissions = [
-            ['name' => 'configurations.view', 'title' => 'View Configurations',],
-            ['name' => 'configuration.view', 'title' => 'View Configuration',],
-            ['name' => 'configuration.create', 'title' => 'Create Configuration',],
-            ['name' => 'configuration.edit', 'title' => 'Edit Configuration',],
-            ['name' => 'configuration.delete', 'title' => 'Delete Configuration',],
+            ['name' => 'sys_configs.view', 'title' => 'View SysConfigs',],
+            ['name' => 'sys_config.view', 'title' => 'View SysConfig',],
+            ['name' => 'sys_config.create', 'title' => 'Create SysConfig',],
+            ['name' => 'sys_config.edit', 'title' => 'Edit SysConfig',],
+            ['name' => 'sys_config.delete', 'title' => 'Delete SysConfig',],
         ];
         DB::table('permissions')->insert($permissions);
 

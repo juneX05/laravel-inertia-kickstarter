@@ -29,14 +29,8 @@ class Menu
     private static function getModuleMenus()
     {
         $menus = [];
-        $core_directories = File::directories(base_path('application/Modules/Core'));
-        $system_directories = File::directories(base_path('application/Modules/System'));
-        $module_directories = array_merge($system_directories, $core_directories);
-
-        // Process Core and System Wide Parent or Default Menus.
-        $menus = self::collectMenus(base_path('application/Modules/Core'), $menus);
-        $menus = self::collectMenus(base_path('application/Modules/System'), $menus);
-
+        $module_directories = app('module_directories_list');
+        $module_directories[] = base_path('application/Modules');
         foreach ($module_directories as $directory) {
             $menus = self::collectMenus($directory, $menus);
         }
@@ -91,9 +85,12 @@ class Menu
         $menu_file = $directory . '/menu.json';
         if (file_exists($menu_file)) {
             $data = file_get_contents($menu_file);
-            $module_menus = json_decode($data, true);
-            foreach ($module_menus as $key => $values) {
-                self::$keys[$key] = $values['position'];
+            $module_menus = [];
+            $module_directory_menus = json_decode($data, true);
+            foreach ($module_directory_menus as $key => $values) {
+                $module_menus[$key] = $values;
+                $module_menus[$key]['module_type'] = str_replace(base_path('application/Modules'),'', $directory);
+                self::$keys[$key] = $values['position'] ?? 1000;
             }
             $menus = array_merge_recursive($menus, $module_menus);
         }
@@ -126,5 +123,20 @@ class Menu
         }
 
         return $menus;
+    }
+
+    public function updateMenuPositions($menu_keys)
+    {
+        $module_menus = self::getModuleMenus();
+        $count = count($menu_keys);
+        for($i = 0; $i < $count; $i++) {
+            $key = $menu_keys[$i];
+            $module = $module_menus[$key];
+            $menu_file = base_path('application/Modules'. $module['module_type']) . "/menu.json";
+            $menu = json_decode(file_get_contents($menu_file), true);
+            $menu[$key]['position'] = $i + 1;
+
+            file_put_contents($menu_file, json_encode($menu, JSON_PRETTY_PRINT));
+        }
     }
 }

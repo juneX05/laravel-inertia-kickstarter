@@ -1,8 +1,7 @@
 <?php
 
+use Application\Modules\Configurations\SysConfigs\Controllers\SysConfigController;
 use Illuminate\Support\Facades\Route;
-use Application\Modules\Configurations\SysConfigs\Controllers\ConfigurationController;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,7 +15,7 @@ use Application\Modules\Configurations\SysConfigs\Controllers\ConfigurationContr
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
-    Route::get('/configurations', [ConfigurationController::class, 'index'])->name('viewConfigurations');
-    Route::get('/configurations/{id}/config', [ConfigurationController::class, 'show'])->name('viewConfiguration');
+    Route::get('/sys-configs', [SysConfigController::class, 'index'])->name('viewSysConfigs');
+    Route::get('/sys-configs/{id}/config', [SysConfigController::class, 'show'])->name('viewSysConfig');
 
 });

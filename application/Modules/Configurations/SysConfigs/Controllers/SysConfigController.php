@@ -9,11 +9,11 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 
-class ConfigurationController extends Controller
+class SysConfigController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('configurations.view'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('sys_configs.view'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $tabs = [
             ['title' => 'Amenities', 'key' => 'amenities'],
@@ -36,7 +36,7 @@ class ConfigurationController extends Controller
     
     public function show($id)
     {
-        abort_if(Gate::denies('configuration.view'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('sys_config.view'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $data = [
             'items' => [],

@@ -22,7 +22,7 @@
                         <v-icon>add</v-icon>
                         Add Menu
                     </inertia-link>
-                    <inertia-link :href="route('createMenu')" as="v-btn" class="float-end" small>
+                    <inertia-link :href="route('managePositions')" as="v-btn" class="float-end" small>
                         <v-icon>add</v-icon>
                         Manage Menu Position
                     </inertia-link>

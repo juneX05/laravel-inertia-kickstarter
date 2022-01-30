@@ -1,9 +1,9 @@
 {
-  "users": {
-    "title": "Users",
-    "icon": "mdi-tag",
-    "link": "viewUsers",
-    "permissions": "users.view",
-    "position": 3
-  }
+    "users": {
+        "title": "Users",
+        "icon": "mdi-tag",
+        "link": "viewUsers",
+        "permissions": "users.view",
+        "position": 3
+    }
 }
