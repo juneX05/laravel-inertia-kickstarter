@@ -52,11 +52,9 @@
 
 <script>
 import AppLayout from '@/Theme/Layouts/AppLayout'
-import __moduleNameSingular__Form from "@/System/__moduleNamePlural__/Views/__moduleNameSingularLower__Form";
 
 export default {
   components: {
-    __moduleNameSingular__Form,
     AppLayout,
   },
   props: ['errors', '__moduleNameSingularLower__',],

@@ -28,6 +28,7 @@ export default {
   props: {
     'errors': Object,
     'form': Object,
+__moduleFormRelationProps__
   },
   data() {
     return {}

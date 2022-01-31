@@ -8,6 +8,7 @@ class FormGenerator
 {
     private $replacors = [];
     private $columns;
+    private $relations;
 
     public function __construct($data)
     {
@@ -17,12 +18,16 @@ class FormGenerator
         $this->replacors['__moduleNameSingular__'] = $data['moduleNameSingular'];
         $this->replacors['__moduleNamePluralLower__'] = $data['moduleNamePluralLower'];
         $this->replacors['__moduleNameSingularLower__'] = $data['moduleNameSingularLower'];
+        $this->replacors['__moduleDirectory__'] = $data['moduleDirectory'];
+        $this->replacors['__moduleNamespace__'] = $data['moduleNamespace'];
 
         $this->columns = $this->getColumns($data['columns']);
+        $this->relations = $data['relations'];
 
-        $stub = base_path('application/Generator/Stubs/ModuleForm.vue');
+        $stub = base_path('application/Generator/Stubs/ModuleForm.txt');
+        $this->generateFormRelationProps();
         $this->generateFormInputs();
-        $this->generate('Views', "{$this->replacors['__moduleNameSingularLower__']}Form.vue", $stub);
+        $this->generate('Views', "{$this->replacors['__moduleNameSingular__']}Form.vue", $stub);
     }
 
     private function getColumns($data_columns)
@@ -44,12 +49,41 @@ class FormGenerator
         $this->replacors[$key] = "\n";
         foreach ($this->columns as $column) {
 //            $rule_line = " { text: 'Email', align: 'start', sortable: true, value: 'email', }, ";
-            $this->replacors[$key] .= "\t\t\t\t";
+            $this->replacors[$key] .= "\n";
+
+            $column = $this->checkForRelationColumn($column);
 
             $info = $this->getColumnTypeStub($column['type']);
 
             $this->replacors[$key] .= $this->fieldStub($column, $info['type'], $info['stub']);
 
+            $this->replacors[$key] .= "\n";
+        }
+    }
+
+    private function checkForRelationColumn($column) {
+        foreach ($this->relations as $relation) {
+            if ($relation['column'] == $column['name']) {
+                $var =  $relation['moduleNamePluralLower'];
+
+                $column['type'] = 'relation';
+                $column['items'] = "$var";
+                $column['item_name'] = "name";
+                break;
+            }
+        }
+
+        return $column;
+    }
+
+    private function generateFormRelationProps()
+    {
+        $key = '__moduleFormRelationProps__';
+
+        $this->replacors[$key] = "";
+        foreach ($this->relations as $relation) {
+            $var =  $relation['moduleNamePluralLower'];
+            $this->replacors[$key] .= "    '$var':Array,";
             $this->replacors[$key] .= "\n";
         }
     }
@@ -76,6 +110,11 @@ class FormGenerator
                 'type' => 'time',
                 'stub' => 'TimePicker'
             ];
+        } elseif (in_array($column_type, ['relation'])) {
+            return [
+                'type' => 'relation',
+                'stub' => 'SelectInput'
+            ];
         }
     }
 
@@ -84,12 +123,14 @@ class FormGenerator
         $stub = base_path('application/Generator/Stubs/moduleForm' . $stub_name . '.txt');
         $content = file_get_contents($stub);
 
-
         $replacors['__field__'] = $column['name'];
         $replacors['__hint__'] = '';
         $replacors['__placeholder__'] = '';
         $replacors['__label__'] = $column['display_name'];
         $replacors['__type__'] = $type;
+        $replacors['__itemsData__'] = $column['items'] ?? "";
+        $replacors['__itemName__'] = $column['item_name'] ?? "";
+        $replacors['__multiple__'] = $column['multiple'] ?? 'false';
 
         return $this->replacor($content, $replacors);
     }
@@ -119,7 +160,7 @@ class FormGenerator
 
         $module_type = $this->replacors['__moduleType__'];
         $moduleName = $this->replacors['__moduleNamePlural__'];
-        $location = base_path() . '/application/Modules/' . $module_type . '/' . $moduleName . '/' . $folder . '/';
+        $location = base_path() . $this->replacors['__moduleDirectory__'] . '/' . $folder . '/';
         if (!File::exists($location)) {
             File::makeDirectory($location, 0755, true);
         }

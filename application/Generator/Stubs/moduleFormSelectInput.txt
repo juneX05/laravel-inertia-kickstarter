@@ -6,7 +6,7 @@
         :form="form"
         :items="__itemsData__"
         :item_id="'id'"
-        :item_name="'name'"
+        :item_name="'__itemName__'"
         :multiple="__multiple__"
         :placeholder="'__placeholder__'"
       ></select-input>

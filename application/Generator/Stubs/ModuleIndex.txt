@@ -94,7 +94,7 @@ export default {
       item_id: null,
       drawer: null,
       headers: [
-        __moduleIndexHeaders__,
+        __moduleIndexHeaders__
         {text: 'Actions', value: 'actions', sortable: false},
       ]
     }

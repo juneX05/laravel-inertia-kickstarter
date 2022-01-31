@@ -2,12 +2,6 @@
 
 namespace Application\Modules;
 
-use Application\Modules\Configurations\DevConfigs\Seeders\DevConfigsSeeder;
-use Application\Modules\Configurations\SysConfigs\Seeders\SysConfigsSeeder;
-use Application\Modules\Core\Menus\Seeders\MenusSeeder;
-use Application\Modules\Core\Permissions\Seeders\PermissionsSeeder;
-use Application\Modules\Core\Users\Seeders\UsersSeeder;
-use Application\Modules\System\Dashboard\Seeders\DashboardSeeder;
 use Illuminate\Database\Seeder;
 
 class SystemSeeder extends Seeder
@@ -19,13 +13,20 @@ class SystemSeeder extends Seeder
      */
     public function run()
     {
-        $this->call([
-            UsersSeeder::class,
-            PermissionsSeeder::class,
-            MenusSeeder::class,
-            DashboardSeeder::class,
-            SysConfigsSeeder::class,
-            DevConfigsSeeder::class,
-        ]);
+        $core_seeders = [
+            'Application\Modules\Core\Users\Seeders\UsersSeeder',
+            'Application\Modules\Core\Permissions\Seeders\PermissionsSeeder',
+            'Application\Modules\Core\Menus\Seeders\MenusSeeder',
+            'Application\Modules\System\Dashboard\Seeders\DashboardSeeder',
+            'Application\Modules\Configurations\SysConfigs\Seeders\SysConfigsSeeder',
+            'Application\Modules\Configurations\DevConfigs\Seeders\DevConfigsSeeder',
+        ];
+
+        $system_seeders = [
+
+        ];
+
+
+        $this->call(array_merge($core_seeders, $system_seeders));
     }
 }

@@ -34,10 +34,11 @@
         </v-card-title>
         <v-card-text class="pb-0">
           <v-form>
-            <__moduleNameSingularLower__Form
+            <__moduleNameSingular__Form
                 :errors="errors"
                 :form="form"
-            ></__moduleNameSingularLower__Form>
+__moduleFormPassCreateRelationProps__
+            ></__moduleNameSingular__Form>
           </v-form>
         </v-card-text>
         <v-card-actions class="pt-0">
@@ -53,14 +54,14 @@
 
 <script>
 import AppLayout from '@/Theme/Layouts/AppLayout'
-import __moduleNameSingular__Form from "@/__moduleType__/__moduleNamePlural__/Views/__moduleNameSingularLower__Form";
+import __moduleNameSingular__Form from "@/__moduleDirectoryForViews__/__moduleNameSingular__Form";
 
 export default {
   components: {
     __moduleNameSingular__Form,
     AppLayout,
   },
-  props: ['errors',],
+  props: ['errors',__moduleFormCreateRelationProps__],
   data() {
     return {
       drawer: null,

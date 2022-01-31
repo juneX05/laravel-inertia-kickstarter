@@ -35,10 +35,11 @@
             <v-form>
               <v-row>
                 <v-col cols="12">
-                  <__moduleNameSingularLower__Form
+                  <__moduleNameSingular__Form
                       :errors="errors"
                       :form="form"
-                  ></__moduleNameSingularLower__Form>
+__moduleFormPassEditRelationProps__
+                  ></__moduleNameSingular__Form>
                 </v-col>
               </v-row>
 
@@ -58,14 +59,14 @@
 
 <script>
 import AppLayout from '@/Theme/Layouts/AppLayout'
-import __moduleNameSingular__Form from "@/__moduleType__/__moduleNamePlural__/Views/__moduleNameSingularLower__Form";
+import __moduleNameSingular__Form from "@/__moduleDirectoryForViews__/__moduleNameSingular__Form";
 
 export default {
   components: {
     __moduleNameSingular__Form,
     AppLayout,
   },
-  props: ['errors', '__moduleNameSingularLower__',],
+  props: ['errors', '__moduleNameSingularLower__', __moduleFormEditRelationProps__],
   mounted() {
     console.log(this.__moduleNameSingularLower__)
   },
@@ -73,6 +74,7 @@ export default {
     return {
       drawer: null,
       form: this.$inertia.form({
+        id: this.__moduleNameSingularLower__.id,
         __moduleEditColumns__
       }),
       loading: false,

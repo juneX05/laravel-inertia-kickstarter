@@ -1,9 +1,10 @@
 <?php
 
-namespace Application\Modules\__moduleType__\__moduleNamePlural__\Models;
+namespace __moduleNamespace__\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+__moduleRelationshipNamespaces__
 
 class __moduleNameSingular__ extends Model
 {
@@ -12,5 +13,7 @@ class __moduleNameSingular__ extends Model
     protected $fillable = [
         __moduleFillableList__
     ];
+
+__moduleRelationshipFunctions__
 
 }

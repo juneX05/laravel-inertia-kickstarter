@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Application\Modules\__moduleType__\__moduleNamePlural__\Controllers\__moduleNameSingular__Controller;
+use __moduleNamespace__\Controllers\__moduleNameSingular__Controller;
 
 /*
 |--------------------------------------------------------------------------

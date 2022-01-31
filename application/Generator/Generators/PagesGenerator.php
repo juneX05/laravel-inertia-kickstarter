@@ -8,6 +8,7 @@ class PagesGenerator
 {
     private $replacors = [];
     private $columns;
+    private $relations;
 
     public function __construct($data)
     {
@@ -17,22 +18,28 @@ class PagesGenerator
         $this->replacors['__moduleNameSingular__'] = $data['moduleNameSingular'];
         $this->replacors['__moduleNamePluralLower__'] = $data['moduleNamePluralLower'];
         $this->replacors['__moduleNameSingularLower__'] = $data['moduleNameSingularLower'];
+        $this->replacors['__moduleDirectory__'] = $data['moduleDirectory'];
+        $this->replacors['__moduleNamespace__'] = $data['moduleNamespace'];
+        $this->replacors['__moduleDirectoryForViews__'] = $data['moduleDirectoryForViews'];
 
         $this->columns = $this->getColumns($data['columns']);
+        $this->relations = $data['relations'];
 
-        $stub = base_path('application/Generator/Stubs/ModuleIndex.vue');
+        $stub = base_path('application/Generator/Stubs/ModuleIndex.txt');
         $this->generateIndexHeaders();
         $this->generate('Views', 'Index.vue', $stub);
 
-        $stub = base_path('application/Generator/Stubs/ModuleCreate.vue');
+        $stub = base_path('application/Generator/Stubs/ModuleCreate.txt');
         $this->generateCreateColumns();
+        $this->generateCreateFormRelationProps();
         $this->generate('Views', 'Create.vue', $stub);
 
-        $stub = base_path('application/Generator/Stubs/ModuleEdit.vue');
+        $stub = base_path('application/Generator/Stubs/ModuleEdit.txt');
         $this->generateEditColumns();
+        $this->generateEditFormRelationProps();
         $this->generate('Views', 'Edit.vue', $stub);
 
-        $stub = base_path('application/Generator/Stubs/ModuleDetail.vue');
+        $stub = base_path('application/Generator/Stubs/ModuleDetail.txt');
         $this->generate('Views', 'Detail.vue', $stub);
     }
 
@@ -71,7 +78,7 @@ class PagesGenerator
 
         $module_type = $this->replacors['__moduleType__'];
         $moduleName = $this->replacors['__moduleNamePlural__'];
-        $location = base_path() . '/application/Modules/' . $module_type . '/' . $moduleName . '/' . $folder . '/';
+        $location = base_path() . $this->replacors['__moduleDirectory__']  . '/' . $folder . '/';
         if (!File::exists($location)) {
             File::makeDirectory($location, 0755, true);
         }
@@ -109,17 +116,60 @@ class PagesGenerator
 
     private function generateEditColumns()
     {
-        $key = '__moduleCreateColumns__';
+        $key = '__moduleEditColumns__';
 
         $this->replacors[$key] = "\n";
+        $var = $this->replacors['__moduleNameSingularLower__'];
         foreach ($this->columns as $column) {
 //            $rule_line = " id: this.data.id, ";
             $this->replacors[$key] .= '        ';
-            $this->replacors[$key] .= "${column['name']} : this.data.${column['name']},";
+            $this->replacors[$key] .= "${column['name']} : this.$var.${column['name']},";
 
             $this->replacors[$key] .= "\n";
         }
     }
 
+    private function generateCreateFormRelationProps()
+    {
+        $key = '__moduleFormCreateRelationProps__';
 
+        $this->replacors[$key] = "";
+        foreach ($this->relations as $relation) {
+            $var =  $relation['moduleNamePluralLower'];
+            $this->replacors[$key] .= "'$var',";
+//            $this->replacors[$key] .= "\n";
+        }
+
+        $key = '__moduleFormPassCreateRelationProps__';
+
+        $this->replacors[$key] = "";
+        foreach ($this->relations as $relation) {
+            $this->replacors[$key] .= "                ";
+            $var =  $relation['moduleNamePluralLower'];
+            $this->replacors[$key] .= ":$var='$var'";
+            $this->replacors[$key] .= "\n";
+        }
+    }
+
+    private function generateEditFormRelationProps()
+    {
+        $key = '__moduleFormEditRelationProps__';
+
+        $this->replacors[$key] = "";
+        foreach ($this->relations as $relation) {
+            $var =  $relation['moduleNamePluralLower'];
+            $this->replacors[$key] .= "'$var',";
+//            $this->replacors[$key] .= "\n";
+        }
+
+        $key = '__moduleFormPassEditRelationProps__';
+
+        $this->replacors[$key] = "";
+        foreach ($this->relations as $relation) {
+            $this->replacors[$key] .= "                      ";
+            $var =  $relation['moduleNamePluralLower'];
+            $this->replacors[$key] .= ":$var='$var'";
+            $this->replacors[$key] .= "\n";
+        }
+    }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Modules\__moduleType__\__moduleNamePlural__\Controllers;
+namespace __moduleNamespace__\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -8,7 +8,8 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
-use Application\Modules\__moduleType__\__moduleNamePlural__\Models\__moduleNameSingular__;
+use __moduleNamespace__\Models\__moduleNameSingular__;
+__moduleRelationshipNamespaces__
 
 class __moduleNameSingular__Controller extends Controller
 {
@@ -16,44 +17,45 @@ class __moduleNameSingular__Controller extends Controller
     {
         abort_if(Gate::denies('__moduleNamePluralLower__.view'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $data = __moduleNameSingular__::all();
+        $view_data = [];
+        __moduleIndexData__
 
-        return $this->render('Index', ['data' => $data]);
+        return $this->render('Index', $view_data);
     }
 
     public function render($component, $props)
     {
-        return Inertia::render('__moduleType__/__moduleNamePlural__/Views/' . $component, $props);
+        return Inertia::render('__moduleDirectoryForViews__/' . $component, $props);
     }
 
     public function create()
     {
         abort_if(Gate::denies('__moduleNameSingularLower__.create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $data = [];
-        $data['extras'] = [];
+        $view_data = [];
+__moduleCreateData__
 
-        return $this->render('Create', $data);
+        return $this->render('Create', $view_data);
     }
 
     public function edit($id)
     {
         abort_if(Gate::denies('__moduleNameSingularLower__.edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $data = [];
-        $data['__moduleNameSingularLower__'] = __moduleNameSingular__::where('id', $id)->first();
+        $view_data = [];
+__moduleEditData__
 
-        return $this->render('Edit', $data);
+        return $this->render('Edit', $view_data);
     }
 
     public function show($id)
     {
         abort_if(Gate::denies('__moduleNameSingularLower__.view'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $data = [];
-        $data['__moduleNameSingularLower__'] = __moduleNameSingular__::where('id', $id)->first();
+        $view_data = [];
+__moduleShowData__
 
-        return $this->render('Detail', $data);
+        return $this->render('Detail', $view_data);
     }
 
     public function store(Request $request)

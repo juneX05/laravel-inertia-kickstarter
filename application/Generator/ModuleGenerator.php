@@ -5,13 +5,25 @@ namespace Application\Generator;
 
 
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class ModuleGenerator
 {
 
     public function __construct($data)
     {
+        $module_info = $this->getModuleInfo($data['moduleName']);
+        $data = array_merge($module_info, $data);
+
+        $data['moduleNamespace'] = $this->getModuleNamespace($data);
+        $data['moduleDirectory'] = $this->getModuleDirectory($data);
+        $data['moduleDirectoryForViews'] = $this->getModuleDirectoryForViews($data);
+
         $this->saveModuleInfo($data);
+
+        if (isset($data['relations']) && count($data['relations']) > 0) {
+            $data['relations'] = $this->getRelationsInfo($data['relations']);
+        }
 
         $controllerGenerator = new \Application\Generator\Generators\ControllerGenerator($data);
         $modelGenerator = new \Application\Generator\Generators\ModelGenerator($data);
@@ -23,13 +35,68 @@ class ModuleGenerator
         $formGenerator = new \Application\Generator\Generators\FormGenerator($data);
     }
 
+    private function getRelationsInfo($relations) {
+        $count = count($relations);
+        for ($i = 0; $i < $count; $i++) {
+            $relation = $relations[$i];
+            $info = $this->getModuleInfo($relation['module']);
+            $info['moduleType'] = $relation['location'];
+            $info['moduleNamespace'] = $this->getModuleNamespace($info);
+            $info['moduleDirectory'] = $this->getModuleDirectory($info);
+            $relations[$i] = array_merge($relations[$i], $info);
+        }
+
+        return $relations;
+    }
+
+    private function getModuleInfo($name) {
+        $data = [];
+        $data['moduleNamePlural'] = Str::plural($name);
+        $data['moduleNameSingular'] = Str::singular($name);
+        $data['moduleNamePluralLower'] = Str::lower(Str::plural(Str::snake($name)));
+        $data['moduleNameSingularLower'] = Str::lower(Str::singular(Str::snake($name)));
+        $data['moduleNameSlug'] = Str::kebab($name);
+
+        return $data;
+    }
+
+    private function getModuleNamespace($data) {
+        $module_type = "";
+        if ($data['moduleType'] == 'Core' || $data['moduleType'] ==  'System') {
+            $module_type = "${data['moduleType']}";
+        } else if($data['moduleType'] == 'DevConfigs' || $data['moduleType'] ==  'SysConfigs') {
+            $module_type = "Configurations\\${data['moduleType']}\\Tabs";
+        }
+        return "Application\\Modules\\$module_type\\${data['moduleNamePlural']}";
+    }
+
+    private function getModuleDirectory($data) {
+        $module_type = "";
+        if ($data['moduleType'] == 'Core' || $data['moduleType'] ==  'System') {
+            $module_type = "${data['moduleType']}";
+        } else if($data['moduleType'] == 'DevConfigs' || $data['moduleType'] ==  'SysConfigs') {
+            $module_type = "Configurations/${data['moduleType']}/Tabs";
+        }
+        return "/application/Modules/$module_type/${data['moduleNamePlural']}";
+    }
+
+    private function getModuleDirectoryForViews($data) {
+        $module_type = "";
+        if ($data['moduleType'] == 'Core' || $data['moduleType'] ==  'System') {
+            $module_type = "${data['moduleType']}";
+        } else if($data['moduleType'] == 'DevConfigs' || $data['moduleType'] ==  'SysConfigs') {
+            $module_type = "Configurations/${data['moduleType']}/Tabs";
+        }
+        return "$module_type/${data['moduleNamePlural']}/Views";
+    }
+
     private function saveModuleInfo($data)
     {
         $file_content = json_encode($data, JSON_PRETTY_PRINT);
 
         $module_type = $data['moduleType'];
         $module_name = $data['moduleNamePlural'];
-        $location = base_path() . '/application/Modules/' . $module_type . '/' . $module_name . '/';
+        $location = base_path() . $data['moduleDirectory'] . '/';
         if (!File::exists($location)) {
             File::makeDirectory($location, 0755, true);
         }

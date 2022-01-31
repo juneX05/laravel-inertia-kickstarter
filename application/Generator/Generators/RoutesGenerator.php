@@ -20,6 +20,8 @@ class RoutesGenerator
         $this->replacors['__moduleNameSingular__'] = $data['moduleNameSingular'];
         $this->replacors['__moduleNamePluralLower__'] = $data['moduleNamePluralLower'];
         $this->replacors['__moduleNameSlug__'] = $data['moduleNameSlug'];
+        $this->replacors['__moduleDirectory__'] = $data['moduleDirectory'];
+        $this->replacors['__moduleNamespace__'] = $data['moduleNamespace'];
 
         $this->columns = $data['columns'];
 
@@ -34,7 +36,7 @@ class RoutesGenerator
 
         $module_type = $this->replacors['__moduleType__'];
         $moduleName = $this->replacors['__moduleNamePlural__'];
-        $location = base_path() . '/application/Modules/' . $module_type . '/' . $moduleName . '/Routes/';
+        $location = base_path() . $this->replacors['__moduleDirectory__']  . '/Routes/';
         if (!File::exists($location)) {
             File::makeDirectory($location, 0755, true);
         }

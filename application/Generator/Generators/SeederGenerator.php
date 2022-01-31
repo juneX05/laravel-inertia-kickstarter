@@ -9,16 +9,19 @@ class SeederGenerator
     private $replacors = [];
     private $columns;
 
-    private $controllerStub;
+    private $stub;
 
     public function __construct($data)
     {
-        $this->controllerStub = base_path('application/Generator/Stubs/ModuleSeeder.txt');
+        $this->stub = base_path('application/Generator/Stubs/ModuleSeeder.txt');
 
         $this->replacors['__moduleType__'] = $data['moduleType'];
         $this->replacors['__moduleNamePlural__'] = $data['moduleNamePlural'];
         $this->replacors['__moduleNameSingular__'] = $data['moduleNameSingular'];
         $this->replacors['__moduleNamePluralLower__'] = $data['moduleNamePluralLower'];
+        $this->replacors['__moduleNameSingularLower__'] = $data['moduleNameSingularLower'];
+        $this->replacors['__moduleDirectory__'] = $data['moduleDirectory'];
+        $this->replacors['__moduleNamespace__'] = $data['moduleNamespace'];
 
         $this->columns = $data['columns'];
 
@@ -27,13 +30,13 @@ class SeederGenerator
 
     private function generate()
     {
-        $file_content = file_get_contents($this->controllerStub);
+        $file_content = file_get_contents($this->stub);
 
         $file_content = $this->replacor($file_content);
 
         $module_type = $this->replacors['__moduleType__'];
         $moduleName = $this->replacors['__moduleNamePlural__'];
-        $location = base_path() . '/application/Modules/' . $module_type . '/' . $moduleName . '/Seeders/';
+        $location = base_path() . $this->replacors['__moduleDirectory__']  . '/Seeders/';
         if (!File::exists($location)) {
             File::makeDirectory($location, 0755, true);
         }
