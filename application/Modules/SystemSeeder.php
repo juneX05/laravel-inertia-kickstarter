@@ -23,7 +23,8 @@ class SystemSeeder extends Seeder
         ];
 
         $system_seeders = [
-
+            'Application\Modules\Configurations\DevConfigs\Tabs\ProjectStatuses\Seeders\ProjectStatusesSeeder',
+            'Application\Modules\System\Projects\Seeders\ProjectsSeeder',
         ];
 
 

@@ -8,6 +8,7 @@ class MigrationGenerator
 {
     private $replacors = [];
     private $columns;
+    private $custom_id;
 
     private $stub;
 
@@ -23,6 +24,7 @@ class MigrationGenerator
         $this->replacors['__moduleNamespace__'] = $data['moduleNamespace'];
 
         $this->columns = $data['columns'];
+        $this->custom_id = $data['custom_id'];
 
         $this->generateMigrationColumns();
 
@@ -34,6 +36,12 @@ class MigrationGenerator
         $key = '__moduleMigrationColumns__';
 
         $this->replacors[$key] = "\n";
+        if (!$this->custom_id) {
+            $this->replacors[$key] .= "\t\t\t";
+            $this->replacors[$key] .= '$table->id();';
+        }
+        $this->replacors[$key] .= "\n";
+
         foreach ($this->columns as $column) {
 //            $rule_line = " $table->string('mimi',43)->default('value')->nullable()->unique(); ";
             $this->replacors[$key] .= "\t\t\t";
@@ -52,6 +60,9 @@ class MigrationGenerator
             }
             if ($column['unique']) {
                 $this->replacors[$key] .= '->unique()';
+            }
+            if (isset($column['primary']) && $column['primary']) {
+                $this->replacors[$key] .= '->primary()';
             }
             $this->replacors[$key] .= ";\n";
         }

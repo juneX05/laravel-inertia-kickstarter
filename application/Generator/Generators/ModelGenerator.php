@@ -9,6 +9,7 @@ class ModelGenerator
 {
     private $replacors = [];
     private $columns;
+    private $custom_id;
     private $relations;
 
     private $stub;
@@ -25,6 +26,7 @@ class ModelGenerator
 
         $this->columns = $data['columns'];
         $this->relations = $data['relations'];
+        $this->custom_id = $data['custom_id'];
 
         $this->generateFillables();
         $this->generateRelationsData();
@@ -36,8 +38,12 @@ class ModelGenerator
     private function generateFillables()
     {
         $key = '__moduleFillableList__';
-
         $this->replacors[$key] = "\n";
+        if ($this->custom_id) {
+            $this->replacors[$key] .= "\t\t";
+            $this->replacors[$key] .= "'id',\n";
+        }
+
         foreach ($this->columns as $column) {
 //            $rule_line = " 'name', 'name2' ";
             $this->replacors[$key] .= "\t\t";

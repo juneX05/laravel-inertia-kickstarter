@@ -8,6 +8,7 @@ class PagesGenerator
 {
     private $replacors = [];
     private $columns;
+    private $custom_id;
     private $relations;
 
     public function __construct($data)
@@ -22,8 +23,10 @@ class PagesGenerator
         $this->replacors['__moduleNamespace__'] = $data['moduleNamespace'];
         $this->replacors['__moduleDirectoryForViews__'] = $data['moduleDirectoryForViews'];
 
-        $this->columns = $this->getColumns($data['columns']);
+//        $this->columns = $this->getColumns($data['columns']);
+        $this->columns = $data['columns'];
         $this->relations = $data['relations'];
+        $this->custom_id = $data['custom_id'];
 
         $stub = base_path('application/Generator/Stubs/ModuleIndex.txt');
         $this->generateIndexHeaders();
@@ -43,30 +46,49 @@ class PagesGenerator
         $this->generate('Views', 'Detail.vue', $stub);
     }
 
-    private function getColumns($data_columns)
-    {
-        $columns = [];
-        foreach ($data_columns as $column) {
-            if ($column['in_form']) {
-                $columns[] = $column;
-            }
-        }
-
-        return $columns;
-    }
+//    private function getColumns($data_columns)
+//    {
+//        $columns = [];
+//        foreach ($data_columns as $column) {
+//            if ($column['in_form']) {
+//                $columns[] = $column;
+//            }
+//        }
+//
+//        return $columns;
+//    }
 
     private function generateIndexHeaders()
     {
         $key = '__moduleIndexHeaders__';
 
         $this->replacors[$key] = "\n";
+
         foreach ($this->columns as $column) {
-//            $rule_line = " { text: 'Email', align: 'start', sortable: true, value: 'email', }, ";
-            $this->replacors[$key] .= "\t\t\t\t";
-            $this->replacors[$key] .= " { text: '${column['display_name']}', align: 'start', sortable: true, value: '${column['name']}', }, ";
+            $relation = $this->getRelationInfo($column['name']);
+            if ($relation) {
+                $this->replacors[$key] .= "\t\t\t\t";
+                $this->replacors[$key] .= " { text: '${column['display_name']}', align: 'start', sortable: true, ";
+                $this->replacors[$key] .= " value: '${relation['moduleNameSingularLower']}.${relation['display']}', },  ";
+            } else {
+                $this->replacors[$key] .= "\t\t\t\t";
+                $this->replacors[$key] .= " { text: '${column['display_name']}', align: 'start', sortable: true, value: '${column['name']}', }, ";
+            }
 
             $this->replacors[$key] .= "\n";
         }
+    }
+
+    private function getRelationInfo($column_name) {
+
+        foreach ($this->relations as $relation) {
+
+            if ($relation['column'] == $column_name) {
+                return $relation;
+            }
+
+        }
+        return false;
     }
 
     private function generate($folder, $file_name, $stub)

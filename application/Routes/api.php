@@ -18,4 +18,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('/generate', function (Request  $request) {
 
+    $file = $request->file('module');
+    $content = file_get_contents($file->getRealPath());
+    $data = json_decode($content, true);
+
+    $module_generator = new \Application\Generator\ModuleGenerator($data);
+    dd($data);
+});
