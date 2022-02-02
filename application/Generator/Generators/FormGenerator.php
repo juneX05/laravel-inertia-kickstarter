@@ -8,6 +8,7 @@ class FormGenerator
 {
     private $replacors = [];
     private $columns;
+    private $custom_id;
     private $relations;
 
     public function __construct($data)
@@ -23,6 +24,7 @@ class FormGenerator
 
         $this->columns = $this->getColumns($data['columns']);
         $this->relations = $data['relations'];
+        $this->custom_id = $data['custom_id'];
 
         $stub = base_path('application/Generator/Stubs/ModuleForm.txt');
         $this->generateFormRelationProps();
@@ -47,6 +49,7 @@ class FormGenerator
         $key = '__moduleFormInputs__';
 
         $this->replacors[$key] = "\n";
+
         foreach ($this->columns as $column) {
 //            $rule_line = " { text: 'Email', align: 'start', sortable: true, value: 'email', }, ";
             $this->replacors[$key] .= "\n";
@@ -114,6 +117,11 @@ class FormGenerator
             return [
                 'type' => 'relation',
                 'stub' => 'SelectInput'
+            ];
+        } elseif (in_array($column_type, ['text'])) {
+            return [
+                'type' => 'text-area',
+                'stub' => 'TextAreaInput'
             ];
         }
     }

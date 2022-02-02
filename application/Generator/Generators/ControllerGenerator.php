@@ -9,6 +9,7 @@ class ControllerGenerator
 {
     private $replacors = [];
     private $columns;
+    private $custom_id;
     private $relations;
 
     private $stub;
@@ -28,6 +29,7 @@ class ControllerGenerator
 
         $this->columns = $this->getColumns($data['columns']);
         $this->relations = $data['relations'];
+        $this->custom_id = $data['custom_id'];
 
         $this->generateRules();
         $this->generateIndexData();
@@ -61,6 +63,11 @@ class ControllerGenerator
         }
 
         $this->replacors[$key] = "\n";
+        if ($this->custom_id) {
+            $this->replacors[$key] .= "\t\t\t";
+            $this->replacors[$key] .= "'id' => ['required', 'integer'],\n";
+        }
+
         foreach ($this->columns as $column) {
 //            $rule_line = " 'name' => ['required','string','unique','max:50'] ";
             $this->replacors[$key] .= "\t\t\t";
@@ -72,7 +79,8 @@ class ControllerGenerator
                 $this->replacors[$key] .= "'nullable',";
             }
 
-            $this->replacors[$key] .= "'${column['type']}',";
+            $column_type = $this->ruleByColumnType($column['type']);
+            $this->replacors[$key] .= "'$column_type',";
 
             if ($column['size'] != null) {
                 $this->replacors[$key] .= "'max:${column['size']}',";
@@ -81,13 +89,25 @@ class ControllerGenerator
             if ($column['unique']) {
                 $table = $this->replacors['__moduleNamePluralLower__'];
                 if ($update) {
-                    $this->replacors[$key] .= "\Illuminate\Validation\Rule::unique('$table')->ignore(\$request->id),";
+                    $this->replacors[$key] .= "\Illuminate\Validation\Rule::unique('$table')->ignore(\$request->key_id),";
                 } else {
                     $this->replacors[$key] .= "'unique:$table',";
                 }
 
             }
             $this->replacors[$key] .= "],\n";
+        }
+    }
+
+    private function ruleByColumnType($column_type) {
+        if ($column_type == 'string' || $column_type == 'text') {
+            return 'string';
+        } else if ($column_type == 'time') {
+            return 'date_format:H:i';
+        } else if ($column_type == 'date') {
+            return 'date_format:Y-m-d';
+        } else {
+            return '';
         }
     }
 

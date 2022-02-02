@@ -18,11 +18,14 @@ class ModuleGenerator
         $data['moduleNamespace'] = $this->getModuleNamespace($data);
         $data['moduleDirectory'] = $this->getModuleDirectory($data);
         $data['moduleDirectoryForViews'] = $this->getModuleDirectoryForViews($data);
+        $data['custom_id'] = $this->checkCustomIdColumn($data['columns']);
 
         $this->saveModuleInfo($data);
 
         if (isset($data['relations']) && count($data['relations']) > 0) {
-            $data['relations'] = $this->getRelationsInfo($data['relations']);
+            $relations = $this->getRelationsInfo($data['relations']);
+            $data['relations'] = $relations['info'];
+            $data['relation_columns'] = $relations['columns'];
         }
 
         $controllerGenerator = new \Application\Generator\Generators\ControllerGenerator($data);
@@ -35,10 +38,22 @@ class ModuleGenerator
         $formGenerator = new \Application\Generator\Generators\FormGenerator($data);
     }
 
+    private function checkCustomIdColumn($columns) {
+        foreach ($columns as $column) {
+            if ($column['name'] == 'id') {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     private function getRelationsInfo($relations) {
         $count = count($relations);
+        $columns = [];
         for ($i = 0; $i < $count; $i++) {
             $relation = $relations[$i];
+            $columns[] = $relation['column'];
             $info = $this->getModuleInfo($relation['module']);
             $info['moduleType'] = $relation['location'];
             $info['moduleNamespace'] = $this->getModuleNamespace($info);
@@ -46,7 +61,7 @@ class ModuleGenerator
             $relations[$i] = array_merge($relations[$i], $info);
         }
 
-        return $relations;
+        return ['info' => $relations, 'columns' => $columns];
     }
 
     private function getModuleInfo($name) {

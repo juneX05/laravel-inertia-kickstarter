@@ -82,20 +82,25 @@ class ApplicationServiceProvider extends ServiceProvider
        $module_directories = $this->getApplicationModulesList();
 
         foreach ($module_directories as $directory) {
-            $web_route_file = $directory . '/Routes/web.php';
-            $api_route_file = $directory . '/Routes/api.php';
-            if (file_exists($web_route_file)) {
-                Route::middleware('web')
-                    ->namespace(null)
-                    ->group($web_route_file);
-            }
+            $this->getRoutes($directory);
+        }
 
-            if (file_exists($api_route_file)) {
-                Route::middleware('api')
-                    ->namespace(null)
-                    ->group($api_route_file);
-            }
+        $this->getRoutes(base_path('/application'));
+    }
 
+    private function getRoutes($directory) {
+        $web_route_file = $directory . '/Routes/web.php';
+        $api_route_file = $directory . '/Routes/api.php';
+        if (file_exists($web_route_file)) {
+            Route::middleware('web')
+                ->namespace(null)
+                ->group($web_route_file);
+        }
+
+        if (file_exists($api_route_file)) {
+            Route::middleware('api')
+                ->namespace(null)
+                ->group($api_route_file);
         }
     }
 }

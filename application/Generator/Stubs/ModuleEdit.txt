@@ -74,6 +74,7 @@ export default {
     return {
       drawer: null,
       form: this.$inertia.form({
+        key_id: this.__moduleNameSingularLower__.id,
         id: this.__moduleNameSingularLower__.id,
         __moduleEditColumns__
       }),

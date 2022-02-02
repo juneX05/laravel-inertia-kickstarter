@@ -66,7 +66,6 @@ __moduleShowData__
         $data = $request->all();
         Validator::make($data, $rules)->validate();
 
-        $data = $request->all();
         $__moduleNameSingularLower__ = __moduleNameSingular__::create($data);
 
         return redirect()->back()
@@ -77,11 +76,14 @@ __moduleShowData__
     {
         abort_if(Gate::denies('__moduleNameSingularLower__.edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $rules = ['id' => ['required'], __moduleUpdateRules__];
+        $rules = [
+            'key_id' => ['required', 'integer'],
+__moduleUpdateRules__
+        ];
         Validator::make($request->all(), $rules)->validate();
 
-        if ($request->has('id')) {
-            __moduleNameSingular__::find($request->input('id'))->update($request->all());
+        if ($request->has('key_id')) {
+            __moduleNameSingular__::find($request->input('key_id'))->update($request->all());
 
             return redirect()->back()
                 ->with('message', '__moduleNameSingular__ Updated Successfully.');
