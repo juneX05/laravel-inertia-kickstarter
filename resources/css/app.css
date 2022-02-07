@@ -1,28 +1,16 @@
-/*@import 'tailwindcss/base';*/
-/*@import 'tailwindcss/components';*/
-/*@import 'tailwindcss/utilities';*/
 
-@import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900');
-/*@import url('https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css');*/
-@import url('https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css');
+/*@import '../../node_modules/bootstrap/dist/css/bootstrap.css';*/
 
-/* Works on Firefox */
-* {
-    scrollbar-width: thin;
-    /*scrollbar-color: blue orange;*/
-}
+/* Font Awesome */
+@import "../../node_modules/@fortawesome/fontawesome-free/css/all.css";
 
-/* Works on Chrome, Edge, and Safari */
-*::-webkit-scrollbar {
-    width: 4px;
-}
+/* i-check */
+@import "../../node_modules/icheck-bootstrap/icheck-bootstrap.css";
 
-*::-webkit-scrollbar-track {
-    /*background: orange;*/
-}
+/* Sweet Alert */
+@import "../../node_modules/@sweetalert2/theme-bootstrap-4/bootstrap-4.css";
 
-*::-webkit-scrollbar-thumb {
-    background-color: #c6c6c6;
-    border-radius: 20px;
-    border: 3px solid #c6c6c6;
-}
+/*Bootstrap*/
+@import '../../node_modules/admin-lte/dist/css/adminlte.css';
+
+

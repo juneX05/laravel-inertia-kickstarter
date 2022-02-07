@@ -16,7 +16,7 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/generate', function () {
+/*Route::get('/generate', function () {
     $name = trim('   Project  ');
     $name = ucwords($name);
     $name = Str::remove(' ', $name);
@@ -68,4 +68,4 @@ Route::get('/generate', function () {
     ];
 
     $moduleGenerator = new \Application\Generator\ModuleGenerator($data);
-});
+});*/

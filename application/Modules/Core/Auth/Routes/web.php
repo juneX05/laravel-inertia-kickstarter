@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -16,5 +17,8 @@ use Inertia\Inertia;
 */
 
 Route::get('/login', function () {
+    if (Auth::check()) {
+        return redirect('/dashboard');
+    }
     return Inertia::render('Core/Auth/Views/Login');
 })->name('login');

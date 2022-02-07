@@ -1,72 +1,71 @@
 <template>
     <app-layout>
-        <template #bread-crumbs>
-            <inertia-link href="/" style="text-decoration: none">
-                <v-icon size="16" style="margin-top: -2px">home</v-icon>
-            </inertia-link>
-          <span class="text-md">
-                / Dashboard
-            </span>
+      <template #header> Dashboard </template>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-info">
+              <div class="inner">
+                <h3>150</h3>
 
-        </template>
-      <template #header>
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-          Dashboard
-        </h2>
-      </template>
-      <v-col cols="12">
-        <v-row>
-          <v-col cols="12" lg="7" md="7" sm="7">
-            <v-card>
-              <v-card-subtitle>
-                <v-row no-gutters>
-                  <div>
-                    <h4>
-                      Today Revenue 2.5%
-                      <v-icon small>mdi-arrow-up</v-icon>
-                    </h4>
-                    <h1 class="mt-2">750,000 TZS</h1>
-                  </div>
-                  <v-spacer/>
-                  <div>
-                    <h4>
-                      Monthly Revenue 21.5%
-                      <v-icon small>mdi-arrow-up</v-icon>
-                    </h4>
-                    <h1 class="mt-2">750,000 TZS</h1>
-                  </div>
-                </v-row>
-              </v-card-subtitle>
-              <v-card-title>
+                <p>New Orders</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-bag"></i>
+              </div>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h3>53<sup style="font-size: 20px">%</sup></h3>
 
-              </v-card-title>
-              <v-card-text>
-                <apexchart :options="options" :series="series" type="bar" width="80%"></apexchart>
-              </v-card-text>
-            </v-card>
-          </v-col>
-          <v-col cols="12" lg="5" md="5" sm="5">
-            <v-card>
-              <v-card-subtitle>
-                Rooms Booking Activity
-              </v-card-subtitle>
-              <v-divider/>
-              <v-card-title>
-                750,000 TZS
-              </v-card-title>
-              <v-card-text>
-                <apexchart
-                    :options="room_booking_activity_chart.chartOptions"
-                    :series="room_booking_activity_chart.series"
-                    type="donut"
-                    width="80%"
-                ></apexchart>
-              </v-card-text>
-            </v-card>
-          </v-col>
-        </v-row>
+                <p>Bounce Rate</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-stats-bars"></i>
+              </div>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-warning">
+              <div class="inner">
+                <h3>44</h3>
 
-      </v-col>
+                <p>User Registrations</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-person-add"></i>
+              </div>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-danger">
+              <div class="inner">
+                <h3>65</h3>
+
+                <p>Unique Visitors</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+              </div>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
     </app-layout>
 </template>
 
@@ -78,6 +77,10 @@
       props: ['data', 'errors'],
       components: {
         AppLayout,
+      },
+      mounted() {
+
+        window.document.body.style.height = 'auto';
       },
       data: function () {
         return {

@@ -7,18 +7,17 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <!-- Fonts -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+        <!-- Google Font: Source Sans Pro -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-        <link rel="stylesheet" href="/fonts/roboto-fonts-material-icons.css">
 
         <!-- Scripts -->
         @routes
         <script src="{{ mix('js/app.js') }}" defer></script>
     </head>
-    <body class="font-sans antialiased">
+    <body class="dark-mode text-sm hold-transition sidebar-mini">
         @inertia
     </body>
 </html>
