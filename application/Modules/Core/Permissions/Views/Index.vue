@@ -1,44 +1,78 @@
 <template>
     <app-layout>
-        <template #bread-crumbs>
-            <inertia-link :href="route('home')" style="text-decoration: none">
-                <v-icon size="16" style="margin-top: -2px">home</v-icon>
-            </inertia-link>
-            <span class="text-md">
-                / Permissions List
-            </span>
 
-        </template>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Permissions
             </h2>
         </template>
 
-        <v-col cols="12">
-            <v-row>
-                <v-col cols="12">
-                    <inertia-link as="v-btn" small :href="route('createPermission')" class="float-end">
-                        <v-icon>add</v-icon>
-                        Add Permission
-                    </inertia-link>
-                    <inertia-link as="v-btn" small :href="route('manageUsersPermissions')" class="float-end mr-2">
-                        <v-icon>add</v-icon>
-                        Manage User Permissions
-                    </inertia-link>
-                </v-col>
-            </v-row>
-            <div class="mt-3">
-
-              <custom-data-table
-                  :delete-route="'deletePermission'"
-                  :edit-route="'editPermission'"
-                  :headers="headers"
-                  :items="data"
-              ></custom-data-table>
-
-            </div>
-        </v-col>
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">All Permissions</h3>
+          <div class="card-tools">
+            <inertia-link class="btn btn-primary btn-sm" :href="route('createPermission')">
+              <i class="fa fa-plus "></i>
+              Add Permission
+            </inertia-link>
+          </div>
+        </div>
+        <div class="card-body p-0">
+          <table class="table table-striped projects">
+            <thead>
+            <tr>
+              <th style="width: 1%">
+                #
+              </th>
+              <th style="width: 20%">
+                Name
+              </th>
+              <th style="width: 20%">
+                Title
+              </th>
+              <th style="width: 30%">
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="(permission, index) in data" :key="index">
+              <td>
+                #
+              </td>
+              <td>
+                <a>
+                  {{ permission.name }}
+                </a>
+                <br />
+                <small>
+                  Created {{ permission.created_at }}
+                </small>
+              </td>
+              <td>
+                {{permission.title}}
+              </td>
+              <td class="project-actions text-right">
+                <a class="btn btn-primary btn-sm" href="#">
+                  <i class="fas fa-folder">
+                  </i>
+                  View
+                </a>
+                <a class="btn btn-info btn-sm" href="#">
+                  <i class="fas fa-pencil-alt">
+                  </i>
+                  Edit
+                </a>
+                <a class="btn btn-danger btn-sm" href="#">
+                  <i class="fas fa-trash">
+                  </i>
+                  Delete
+                </a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
 
     </app-layout>
 </template>

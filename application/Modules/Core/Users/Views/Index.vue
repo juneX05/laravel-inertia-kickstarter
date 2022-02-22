@@ -1,79 +1,95 @@
 <template>
     <app-layout>
-        <template #bread-crumbs>
-            <inertia-link href="/" style="text-decoration: none">
-                <v-icon size="16" style="margin-top: -2px">home</v-icon>
-            </inertia-link>
-            <span class="text-md">
-                / Users List
-            </span>
 
-        </template>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Users
             </h2>
         </template>
 
-        <v-col cols="12">
-            <v-row>
-                <v-col cols="12">
-                    <inertia-link as="v-btn" small :href="route('createUser')" class="float-end">
-                        <v-icon>add</v-icon>
-                        Add User
-                    </inertia-link>
-                </v-col>
-            </v-row>
-            <div class="mt-3">
-                <v-data-table v-if="data.length > 0"
-                              :headers="headers"
-                              :items="data"
-                              item-key="id"
-                              class="elevation-1"
-                >
-                    <template v-slot:item.SNO = "{ index }">
-                        {{ index + 1 }}
-                    </template>
-                    <template v-slot:item.actions="{ item }">
-                        <div v-if="item_id == null ">
-                            <inertia-link as="v-icon" small :href="route('editUser',[item.id])" class="mr-2">
-                                mdi-pencil
-                            </inertia-link>
-                            <inertia-link as="v-icon" small :href="route('manageUserPermissions',[item.id])" class="mr-2">
-                                mdi-wrench
-                            </inertia-link>
-                            <v-icon
-                                small
-                                @click="item_id = item.id"
-                            >
-                                mdi-delete
-                            </v-icon>
-                        </div>
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">All Users</h3>
+          <div class="card-tools">
+            <inertia-link class="btn btn-primary btn-sm" :href="route('createUser')">
+              <i class="fa fa-plus "></i>
+              Add User
+            </inertia-link>
+          </div>
+        </div>
+        <div class="card-body p-0">
+          <table class="table table-striped projects">
+            <thead>
+            <tr>
+              <th style="width: 1%">
+                #
+              </th>
+              <th style="width: 20%">
+                Name
+              </th>
+              <th style="width: 20%">
+                Email
+              </th>
+              <th style="width: 20%">
+                Profile Photo
+              </th>
+              <th style="width: 8%" class="text-center">
+                Status
+              </th>
+              <th style="width: 30%">
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="(user, index) in data" :key="index">
+              <td>
+                #
+              </td>
+              <td>
+                <a>
+                  {{ user.name }}
+                </a>
+                <br />
+                <small>
+                  Created {{ user.created_at }}
+                </small>
+              </td>
+              <td>
+                {{user.email}}
+              </td>
+              <td>
+                <ul class="list-inline">
+                  <li class="list-inline-item">
+                    <img alt="Avatar" class="table-avatar" :src="user.profile_photo_url">
+                  </li>
+                </ul>
+              </td>
+              <td class="project-state">
+                <span class="badge badge-success">Success</span>
+              </td>
+              <td class="project-actions text-right">
+                <a class="btn btn-primary btn-sm" href="#">
+                  <i class="fas fa-folder">
+                  </i>
+                  View
+                </a>
+                <a class="btn btn-info btn-sm" href="#">
+                  <i class="fas fa-pencil-alt">
+                  </i>
+                  Edit
+                </a>
+                <a class="btn btn-danger btn-sm" href="#">
+                  <i class="fas fa-trash">
+                  </i>
+                  Delete
+                </a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
 
-                        <div v-if="item_id != null && item_id == item.id" class="mt-5 mb-5">
-
-                            <v-row justify="center">
-                                <b>Are you sure you want to DELETE this item?</b>
-                            </v-row>
-                            <v-row justify="end">
-
-                                <v-btn small dark @click="item_id = null">No</v-btn>
-                                <v-spacer></v-spacer>
-                                <v-btn small @click="remove">I'm Sure</v-btn>
-                            </v-row>
-                        </div>
-                    </template>
-                </v-data-table>
-                <v-card v-else>
-                    <v-card-text>
-                        <v-icon>warning</v-icon>
-                        <p>
-                            No Data Available for this table
-                        </p>
-                    </v-card-text>
-                </v-card>
-            </div>
-        </v-col>
+      </div>
 
     </app-layout>
 </template>

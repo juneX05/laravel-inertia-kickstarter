@@ -1,62 +1,46 @@
 <template>
     <app-layout>
-        <template #bread-crumbs>
-            <inertia-link href="/" style="text-decoration: none">
-                <v-icon size="16" style="margin-top: -2px">home</v-icon>
-            </inertia-link>
-            /
-            <inertia-link href="/users" style="text-decoration: none">
-                Users List
-            </inertia-link>
-            <span class="text-md">
-                / Create User
-            </span>
-
-            <br/>
-            <inertia-link as="v-btn" small href="/users" style="text-decoration: none" class="mt-2">
-                <v-icon>arrow_back</v-icon>
-                Back
-            </inertia-link>
-        </template>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Users
             </h2>
         </template>
 
-        <v-row align="center" justify="center" align-content="center">
-            <v-col cols="8">
-                <v-card class="mt-2">
-                    <v-card-title>
-                        Create New User
-                    </v-card-title>
-                    <v-card-text class="pb-0">
-                        <v-form>
-                            <div class="mb-3">
-                                <v-text-field hide-details="auto" :error="checkErrors('name')" :error-messages="errors.name"
-                                    outlined dense label="User Name" name="name" type="text" v-model="form.name"></v-text-field>
-                            </div>
-                            <div class="mb-3">
-                                <v-text-field hide-details="auto" :error="checkErrors('email')" :error-messages="errors.email"
-                                    outlined dense label="User Email" name="email" type="email" v-model="form.email"></v-text-field>
-                            </div>
-                            <div class="mb-3">
-                                <v-text-field hide-details="auto" :error="checkErrors('password')"
-                                    outlined dense label="User Password" name="password" type="password" v-model="form.password"></v-text-field>
-                            </div>
-                            <div class="mb-3">
-                                <v-text-field hide-details="auto" :error="checkErrors('password')" :error-messages="errors.password"
-                                              outlined dense label="Repeat Password" name="password_confirmation" type="password" v-model="form.password_confirmation"></v-text-field>
-                            </div>
-                        </v-form>
-                    </v-card-text>
-                    <v-card-actions class="ml-2">
-                        <v-btn dark @click="submit" :loading="loading">Save User</v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-col>
+      <div class="card card-primary">
+        <div class="card-header">
+          <h3 class="card-title">
+            New User
+          </h3>
+          <div class="card-tools">
 
-        </v-row>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <label for="name"> Name</label>
+            <input type="text" id="name" v-model="form.name" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="email"> Email</label>
+            <input type="text" id="email" v-model="form.email" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="password"> Password</label>
+            <input type="text" id="password" v-model="form.password" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="confirm_password"> Confirm Password</label>
+            <input type="text" id="confirm_password" v-model="form.password_confirmation" class="form-control">
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <button class="btn btn-primary" @click="submit">
+            Save User
+          </button>
+        </div>
+
+      </div>
 
     </app-layout>
 </template>
