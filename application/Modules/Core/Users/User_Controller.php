@@ -2,6 +2,7 @@
 
 namespace Application\Modules\Core\Users;
 
+use App\Actions\Fortify\CreateNewUser;
 use App\Actions\Fortify\PasswordValidationRules;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -70,7 +71,11 @@ class User_Controller extends Controller
                 'password' => $this->passwordRules(),
             ]);
 
-        $result = User_Model::create($request->all());
+        $result = User_Model::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
+        ]);
 
         return redirect()->back()
             ->with('message', 'User Created Successfully.');

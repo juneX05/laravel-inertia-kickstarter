@@ -21,6 +21,7 @@ class ModelGenerator
         $this->replacors['__moduleType__'] = $data['moduleType'];
         $this->replacors['__moduleNamePlural__'] = $data['moduleNamePlural'];
         $this->replacors['__moduleNameSingular__'] = $data['moduleNameSingular'];
+        $this->replacors['__moduleNamePluralLower__'] = $data['moduleNamePluralLower'];
         $this->replacors['__moduleDirectory__'] = $data['moduleDirectory'];
         $this->replacors['__moduleNamespace__'] = $data['moduleNamespace'];
 
@@ -59,11 +60,11 @@ class ModelGenerator
 
         $module_type = $this->replacors['__moduleType__'];
         $moduleName = $this->replacors['__moduleNamePlural__'];
-        $location = base_path() . $this->replacors['__moduleDirectory__']  . '/Models/';
+        $location = base_path() . $this->replacors['__moduleDirectory__']  . '/';
         if (!File::exists($location)) {
             File::makeDirectory($location, 0755, true);
         }
-        $file_name = $this->replacors['__moduleNameSingular__'] . '.php';
+        $file_name = $this->replacors['__moduleNameSingular__'] . '_Model.php';
         $file = $location . $file_name;
         file_put_contents($file, $file_content);
     }
@@ -87,7 +88,7 @@ class ModelGenerator
             $function_name = Str::snake($relation['module']);
             $functions .= "
     public function $function_name() {
-      return \$this->${relation['type']}(${relation['moduleNameSingular']}::class);
+      return \$this->${relation['type']}(${relation['moduleNameSingular']}_Model::class);
     }";
         }
 
@@ -98,7 +99,7 @@ class ModelGenerator
         $namespace_info = "";
         foreach ($this->relations as $relation) {
             $namespace = 'use Application\\Modules\\';
-            $module_model_name = $relation['moduleNameSingular'] ;
+            $module_model_name = $relation['moduleNameSingular'] . '_Model' ;
             $module_name = $relation['moduleNamePlural'] ;
             if ($relation['location'] == 'Core') {
                 $namespace .= "Core\\";
@@ -110,7 +111,7 @@ class ModelGenerator
                 $namespace .= "Configurations\\SysConfigs\\Tabs\\";
             }
 
-            $namespace .= "$module_name\\Models\\$module_model_name;";
+            $namespace .= "$module_name\\$module_model_name;";
             $namespace_info .= "$namespace \n";
         }
 

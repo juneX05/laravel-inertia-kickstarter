@@ -76,11 +76,11 @@ class MigrationGenerator
 
         $module_type = $this->replacors['__moduleType__'];
         $moduleName = $this->replacors['__moduleNamePlural__'];
-        $location = base_path() . $this->replacors['__moduleDirectory__'] . '/';
+        $location = base_path() . '/application/Migrations/';
         if (!File::exists($location)) {
             File::makeDirectory($location, 0755, true);
         }
-        $file_name = '_create_' . $this->replacors['__moduleNamePlural__'] . '_table.php';
+        $file_name = date('Y_m_d_His') . '_create_' . $this->replacors['__moduleNamePlural__'] . '_table.php';
         $file = $location . $file_name;
         file_put_contents($file, $file_content);
     }

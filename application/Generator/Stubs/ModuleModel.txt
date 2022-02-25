@@ -1,18 +1,20 @@
 <?php
 
-namespace __moduleNamespace__\Models;
+namespace __moduleNamespace__;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 __moduleRelationshipNamespaces__
 
-class __moduleNameSingular__ extends Model
+class __moduleNameSingular___Model extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         __moduleFillableList__
     ];
+
+    protected $table = '__moduleNamePluralLower__';
 
 __moduleRelationshipFunctions__
 

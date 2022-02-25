@@ -1,6 +1,6 @@
 <?php
 
-namespace __moduleNamespace__\Controllers;
+namespace __moduleNamespace__;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -8,10 +8,10 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
-use __moduleNamespace__\Models\__moduleNameSingular__;
+use __moduleNamespace__\__moduleNameSingular___Model;
 __moduleRelationshipNamespaces__
 
-class __moduleNameSingular__Controller extends Controller
+class __moduleNameSingular___Controller extends Controller
 {
     public function index()
     {
@@ -66,7 +66,7 @@ __moduleShowData__
         $data = $request->all();
         Validator::make($data, $rules)->validate();
 
-        $__moduleNameSingularLower__ = __moduleNameSingular__::create($data);
+        $__moduleNameSingularLower__ = __moduleNameSingular___Model::create($data);
 
         return redirect()->back()
             ->with('message', '__moduleNameSingularLower__ Created Successfully.');
@@ -83,7 +83,7 @@ __moduleUpdateRules__
         Validator::make($request->all(), $rules)->validate();
 
         if ($request->has('key_id')) {
-            __moduleNameSingular__::find($request->input('key_id'))->update($request->all());
+            __moduleNameSingular___Model::find($request->input('key_id'))->update($request->all());
 
             return redirect()->back()
                 ->with('message', '__moduleNameSingular__ Updated Successfully.');
@@ -95,7 +95,7 @@ __moduleUpdateRules__
         abort_if(Gate::denies('__moduleNameSingularLower__.delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->has('id')) {
-            __moduleNameSingular__::find($request->input('id'))->delete();
+            __moduleNameSingular___Model::find($request->input('id'))->delete();
 
             return redirect()->back();
         }
