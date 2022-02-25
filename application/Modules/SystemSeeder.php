@@ -14,17 +14,16 @@ class SystemSeeder extends Seeder
     public function run()
     {
         $core_seeders = [
-            'Application\Modules\Core\Users\Seeders\UsersSeeder',
-            'Application\Modules\Core\Permissions\Seeders\PermissionsSeeder',
-            'Application\Modules\Core\Menus\Seeders\MenusSeeder',
-            'Application\Modules\System\Dashboard\Seeders\DashboardSeeder',
-            'Application\Modules\Configurations\SysConfigs\Seeders\SysConfigsSeeder',
-            'Application\Modules\Configurations\DevConfigs\Seeders\DevConfigsSeeder',
+            'Application\Modules\Core\Users\Users_Seeder',
+            'Application\Modules\Core\Permissions\Permissions_Seeder',
+            'Application\Modules\Core\Menus\Menus_Seeder',
+            'Application\Modules\System\Dashboard\Dashboard_Seeder',
+            'Application\Modules\Configurations\SysConfigs\SysConfigs_Seeder',
+            'Application\Modules\Configurations\DevConfigs\DevConfigs_Seeder',
         ];
 
         $system_seeders = [
-            'Application\Modules\Configurations\DevConfigs\Tabs\ProjectStatuses\Seeders\ProjectStatusesSeeder',
-            'Application\Modules\System\Projects\Seeders\ProjectsSeeder',
+
         ];
 
 

@@ -168,7 +168,7 @@ class FormGenerator
 
         $module_type = $this->replacors['__moduleType__'];
         $moduleName = $this->replacors['__moduleNamePlural__'];
-        $location = base_path() . $this->replacors['__moduleDirectory__'] . '/' . $folder . '/';
+        $location = base_path() . '/resources/js/Pages/' . $folder . '/';
         if (!File::exists($location)) {
             File::makeDirectory($location, 0755, true);
         }

@@ -119,11 +119,11 @@ class ControllerGenerator
 
         $module_type = $this->replacors['__moduleType__'];
         $moduleName = $this->replacors['__moduleNamePlural__'];
-        $location = base_path() . $this->replacors['__moduleDirectory__'] . '/Controllers/';
+        $location = base_path() . $this->replacors['__moduleDirectory__'];
         if (!File::exists($location)) {
             File::makeDirectory($location, 0755, true);
         }
-        $file_name = $this->replacors['__moduleNameSingular__'] . 'Controller.php';
+        $file_name = $this->replacors['__moduleNameSingular__'] . '_Controller.php';
         $file = $location . $file_name;
 
         file_put_contents($file, $file_content);
