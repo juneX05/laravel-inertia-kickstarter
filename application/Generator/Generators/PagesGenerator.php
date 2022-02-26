@@ -100,7 +100,7 @@ class PagesGenerator
 
         $module_type = $this->replacors['__moduleType__'];
         $moduleName = $this->replacors['__moduleNamePlural__'];
-        $location = base_path() . $this->replacors['__moduleDirectory__']  . '/' . $folder . '/';
+        $location = base_path() . '/application/Views/Pages/' . $this->replacors['__moduleDirectoryForViews__'] . '/';
         if (!File::exists($location)) {
             File::makeDirectory($location, 0755, true);
         }

@@ -119,11 +119,11 @@ class ControllerGenerator
 
         $module_type = $this->replacors['__moduleType__'];
         $moduleName = $this->replacors['__moduleNamePlural__'];
-        $location = base_path() . $this->replacors['__moduleDirectory__'] . '/Controllers/';
+        $location = base_path() . $this->replacors['__moduleDirectory__'] . '/';
         if (!File::exists($location)) {
             File::makeDirectory($location, 0755, true);
         }
-        $file_name = $this->replacors['__moduleNameSingular__'] . 'Controller.php';
+        $file_name = $this->replacors['__moduleNameSingular__'] . '_Controller.php';
         $file = $location . $file_name;
 
         file_put_contents($file, $file_content);
@@ -143,7 +143,7 @@ class ControllerGenerator
     }
 
     private function generateIndexData() {
-        $model =  $this->replacors['__moduleNameSingular__'];
+        $model =  $this->replacors['__moduleNameSingular__'] . '_Model';
         if (count($this->relations)){
             $relationFunctions = "";
             foreach ($this->relations as $relation) {
@@ -177,7 +177,7 @@ class ControllerGenerator
     }
 
     private function generateEditData() {
-        $model =  $this->replacors['__moduleNameSingular__'];
+        $model =  $this->replacors['__moduleNameSingular__'] . '_Model';
         $edit_var = $this->replacors['__moduleNameSingularLower__'];
 
         if (count($this->relations)){
@@ -225,7 +225,7 @@ class ControllerGenerator
         $namespace_info = "";
         foreach ($this->relations as $relation) {
             $namespace = 'use Application\\Modules\\';
-            $module_model_name = $relation['moduleNameSingular'] ;
+            $module_model_name = $relation['moduleNameSingular'] . '_Model' ;
             $module_name = $relation['moduleNamePlural'] ;
             if ($relation['location'] == 'Core') {
                 $namespace .= "Core\\";
@@ -237,7 +237,7 @@ class ControllerGenerator
                 $namespace .= "Configurations\\SysConfigs\\Tabs\\";
             }
 
-            $namespace .= "$module_name\\Models\\$module_model_name;";
+            $namespace .= "$module_name\\$module_model_name;";
             $namespace_info .= "$namespace \n";
         }
 

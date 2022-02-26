@@ -3,7 +3,7 @@ const path = require('path');
 module.exports = {
     resolve: {
         alias: {
-            '@': path.resolve('application/Modules'),
+            '@': path.resolve('application/Views/Pages'),
         },
     },
     module: {

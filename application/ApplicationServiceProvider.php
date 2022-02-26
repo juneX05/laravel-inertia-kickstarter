@@ -41,41 +41,25 @@ class ApplicationServiceProvider extends ServiceProvider
 
     public function boot()
     {
-            $this->app->singleton('module_directories', function(){
-                return $this->getApplicationModules();
-            });
+        $this->app->singleton('module_directories', function(){
+            return $this->getApplicationModules();
+        });
 
-            $this->app->singleton('module_directories_list', function(){
-                return $this->getApplicationModulesList();
-            });
+        $this->app->singleton('module_directories_list', function(){
+            return $this->getApplicationModulesList();
+        });
 
 //            // If you use this line of code then it'll be available in any view
 //            // as $site_settings but you may also use app('site_settings') as well
 //            View::share('site_settings', app('site_settings'));
 
-
-        $this->migrationsMap();
         $this->routesMap();
+        $this->loadMigrationsFrom(base_path('/application/Migrations'));
     }
 
     public function register()
     {
         //
-    }
-
-    private function migrationsMap() {
-        $module_directories = $this->getApplicationModulesList();
-
-        $migrations_folders = [];
-        foreach ($module_directories as $directory) {
-            if (is_dir($directory . "/Migrations")) {
-                $migrations_folders[] = $directory . "/Migrations";
-            }
-            if (is_dir($directory . "/Migrations")) {
-                $seeders_folders[] = $directory . "/Seeders";
-            }
-        }
-        $this->loadMigrationsFrom($migrations_folders);
     }
 
     private function routesMap() {
@@ -89,18 +73,24 @@ class ApplicationServiceProvider extends ServiceProvider
     }
 
     private function getRoutes($directory) {
-        $web_route_file = $directory . '/Routes/web.php';
-        $api_route_file = $directory . '/Routes/api.php';
-        if (file_exists($web_route_file)) {
-            Route::middleware('web')
-                ->namespace(null)
-                ->group($web_route_file);
+        $files = File::allFiles($directory);
+
+        foreach ($files as $file) {
+            $filename = $file->getFilename();
+            $filepath = $file->getPathname();
+//            $checks = explode('_', $filename);
+            if ($filename == 'ApiRoutes.php') {
+                Route::middleware('api')
+                    ->namespace(null)
+                    ->group($filepath);
+            }
+
+            if ($filename == 'WebRoutes.php') {
+                Route::middleware('web')
+                    ->namespace(null)
+                    ->group($filepath);
+            }
         }
 
-        if (file_exists($api_route_file)) {
-            Route::middleware('api')
-                ->namespace(null)
-                ->group($api_route_file);
-        }
     }
 }

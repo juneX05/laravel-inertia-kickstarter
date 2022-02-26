@@ -21,6 +21,7 @@ class FormGenerator
         $this->replacors['__moduleNameSingularLower__'] = $data['moduleNameSingularLower'];
         $this->replacors['__moduleDirectory__'] = $data['moduleDirectory'];
         $this->replacors['__moduleNamespace__'] = $data['moduleNamespace'];
+        $this->replacors['__moduleDirectoryForViews__'] = $data['moduleDirectoryForViews'];
 
         $this->columns = $this->getColumns($data['columns']);
         $this->relations = $data['relations'];
@@ -29,7 +30,7 @@ class FormGenerator
         $stub = base_path('application/Generator/Stubs/ModuleForm.txt');
         $this->generateFormRelationProps();
         $this->generateFormInputs();
-        $this->generate('Views', "{$this->replacors['__moduleNameSingular__']}Form.vue", $stub);
+        $this->generate('Pages', "{$this->replacors['__moduleNameSingular__']}Form.vue", $stub);
     }
 
     private function getColumns($data_columns)
@@ -168,7 +169,7 @@ class FormGenerator
 
         $module_type = $this->replacors['__moduleType__'];
         $moduleName = $this->replacors['__moduleNamePlural__'];
-        $location = base_path() . $this->replacors['__moduleDirectory__'] . '/' . $folder . '/';
+        $location = base_path() . '/application/Views/Pages/' . $this->replacors['__moduleDirectoryForViews__'] . '/';
         if (!File::exists($location)) {
             File::makeDirectory($location, 0755, true);
         }
