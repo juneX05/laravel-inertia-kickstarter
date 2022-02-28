@@ -10,6 +10,12 @@
 /* Sweet Alert */
 @import "../../node_modules/@sweetalert2/theme-bootstrap-4/bootstrap-4.css";
 
+/* Select 2 */
+@import "~select2/dist/css/select2.css";
+
+/* Bootstrap Switch */
+@import "~bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css";
+
 /*Bootstrap*/
 @import '../../node_modules/admin-lte/dist/css/adminlte.css';
 

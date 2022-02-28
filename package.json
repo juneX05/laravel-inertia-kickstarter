@@ -43,6 +43,8 @@
         "moment": "^2.29.1",
         "popper.js": "^1.16.1",
         "sweetalert2": "^9.17.2",
-        "vue-apexcharts": "^1.6.2"
+        "vue-apexcharts": "^1.6.2",
+        "select2": "^4.0.13",
+        "bootstrap-switch": "^3.4.0"
     }
 }

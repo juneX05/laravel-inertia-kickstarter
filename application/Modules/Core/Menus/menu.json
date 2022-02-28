@@ -5,5 +5,27 @@
         "link": "viewMenus",
         "permissions": "menus.view",
         "position": 8
+    },
+    "view_menus": {
+        "title": "View Menus",
+        "icon": "fa-wrench",
+        "link": "viewMenus",
+        "permissions": [
+            "menu.create",
+            "menus.view",
+            "menu.edit"
+        ],
+        "position": 10,
+        "parent": "menus"
+    },
+    "add_menu": {
+        "title": "Add Menu",
+        "icon": "fa-plus",
+        "link": "createMenu",
+        "permissions": [
+            "menu.create"
+        ],
+        "position": 11,
+        "parent": "menus"
     }
 }

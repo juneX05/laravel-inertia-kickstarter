@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use __moduleNamespace__\Controllers\__moduleNameSingular__Controller;
+use __moduleNamespace__\__moduleNameSingular___Controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,12 +16,12 @@ use __moduleNamespace__\Controllers\__moduleNameSingular__Controller;
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
-    Route::get('/__moduleNameSlug__', [__moduleNameSingular__Controller::class, 'index'])->name('view__moduleNamePlural__');
-    Route::get('/__moduleNameSlug__/{id}/view', [__moduleNameSingular__Controller::class, 'show'])->name('view__moduleNameSingular__');
-    Route::get('/__moduleNameSlug__/create', [__moduleNameSingular__Controller::class, 'create'])->name('create__moduleNameSingular__');
-    Route::post('/__moduleNameSlug__/save', [__moduleNameSingular__Controller::class, 'store'])->name('save__moduleNameSingular__');
-    Route::get('/__moduleNameSlug__/{id}/edit', [__moduleNameSingular__Controller::class, 'edit'])->name('edit__moduleNameSingular__');
-    Route::post('/__moduleNameSlug__/delete', [__moduleNameSingular__Controller::class, 'destroy'])->name('delete__moduleNameSingular__');
-    Route::post('/__moduleNameSlug__/update', [__moduleNameSingular__Controller::class, 'update'])->name('update__moduleNameSingular__');
+    Route::get('/__moduleNameSlug__', [__moduleNameSingular___Controller::class, 'index'])->name('view__moduleNamePlural__');
+    Route::get('/__moduleNameSlug__/{id}/view', [__moduleNameSingular___Controller::class, 'show'])->name('view__moduleNameSingular__');
+    Route::get('/__moduleNameSlug__/create', [__moduleNameSingular___Controller::class, 'create'])->name('create__moduleNameSingular__');
+    Route::post('/__moduleNameSlug__/save', [__moduleNameSingular___Controller::class, 'store'])->name('save__moduleNameSingular__');
+    Route::get('/__moduleNameSlug__/{id}/edit', [__moduleNameSingular___Controller::class, 'edit'])->name('edit__moduleNameSingular__');
+    Route::post('/__moduleNameSlug__/delete', [__moduleNameSingular___Controller::class, 'destroy'])->name('delete__moduleNameSingular__');
+    Route::post('/__moduleNameSlug__/update', [__moduleNameSingular___Controller::class, 'update'])->name('update__moduleNameSingular__');
 
 });

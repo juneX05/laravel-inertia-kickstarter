@@ -2,11 +2,12 @@
 
 namespace App\Http\Middleware;
 
+use Application\Modules\Core\Menus\Menu_Model;
+use Application\Modules\Core\Users\UserPermission_Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use Inertia\Middleware;
-use Application\Modules\Core\Menus\Models\Menu;
-use Application\Modules\Core\Users\Models\UserPermission;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -40,10 +41,11 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request)
     {
         $data = [
-            'current_user_permissions' => UserPermission::where(['user_id' => Auth::id(), 'status' => 1])->pluck('permission_name')->toArray(),
+            'current_user_permissions' => UserPermission_Model::where(['user_id' => Auth::id(), 'status' => 1])->pluck('permission_name')->toArray(),
             'APP_NAME' => env('APP_NAME'),
-            'sidebar_links' => Menu::all(),
-            'menu_keys' => Menu::getKeys(),
+            'sidebar_links' => Menu_Model::all(),
+            'menu_keys' => Menu_Model::getKeys(),
+            'current_route' => Route::getCurrentRoute()->action['as'],
             'error' => [],
         ];
         return array_merge(parent::share($request), $data);

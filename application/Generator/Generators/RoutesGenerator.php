@@ -36,11 +36,11 @@ class RoutesGenerator
 
         $module_type = $this->replacors['__moduleType__'];
         $moduleName = $this->replacors['__moduleNamePlural__'];
-        $location = base_path() . $this->replacors['__moduleDirectory__']  . '/Routes/';
+        $location = base_path() . $this->replacors['__moduleDirectory__']  . '/';
         if (!File::exists($location)) {
             File::makeDirectory($location, 0755, true);
         }
-        $file_name = 'web.php';
+        $file_name = 'WebRoutes.php';
         $file = $location . $file_name;
         file_put_contents($file, $file_content);
     }

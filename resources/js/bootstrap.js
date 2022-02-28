@@ -11,6 +11,8 @@ try {
     window.Popper = require('popper.js').default;
 
     require('bootstrap');
+    require('select2');
+    require('bootstrap-switch');
     require('admin-lte');
 } catch (e) {}
 

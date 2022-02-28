@@ -54,7 +54,7 @@ __moduleFormPassCreateRelationProps__
 
 <script>
 import AppLayout from '@/Theme/Layouts/AppLayout'
-import __moduleNameSingular__Form from "@/__moduleDirectoryForViews__/__moduleNameSingular__Form";
+import __moduleNameSingular__Form from "@/Pages/__moduleDirectoryForViews__/__moduleNameSingular__Form";
 
 export default {
   components: {

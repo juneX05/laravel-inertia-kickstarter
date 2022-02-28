@@ -42,7 +42,7 @@ new Vue({
             props: {
                 initialPage: JSON.parse(app.dataset.page),
                 // resolveComponent: (name) => require(`./Pages/${name}`).default,
-                resolveComponent: (name) => require(`../../application/Modules/${name}`).default,
+                resolveComponent: (name) => require(`../../application/Views/Pages/${name}`).default,
             },
         }),
 }).$mount(app);

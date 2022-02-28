@@ -2,8 +2,25 @@
     "users": {
         "title": "Users",
         "icon": "mdi-tag",
+        "link": "#",
+        "permissions": "users.view",
+        "position": 3,
+        "parent": null
+    },
+    "view_users" : {
+        "title": "View Users",
+        "icon": "mdi-tag",
         "link": "viewUsers",
         "permissions": "users.view",
-        "position": 3
+        "position": 1,
+        "parent" : "users"
+    },
+    "add_user" : {
+        "title": "Add Users",
+        "icon": "mdi-tag",
+        "link": "createUser",
+        "permissions": "user.create",
+        "position": 4,
+        "parent" : "users"
     }
 }

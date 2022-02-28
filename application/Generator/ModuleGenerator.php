@@ -102,7 +102,7 @@ class ModuleGenerator
         } else if($data['moduleType'] == 'DevConfigs' || $data['moduleType'] ==  'SysConfigs') {
             $module_type = "Configurations/${data['moduleType']}/Tabs";
         }
-        return "$module_type/${data['moduleNamePlural']}/Views";
+        return "$module_type/${data['moduleNamePlural']}/";
     }
 
     private function saveModuleInfo($data)

@@ -14,5 +14,13 @@
         "link": "#",
         "permissions": "",
         "position": 5
+    },
+    "Start": {
+        "title": "start",
+        "icon": "fa-start",
+        "link": "\/",
+        "permissions": [],
+        "position": 12,
+        "parent": null
     }
 }

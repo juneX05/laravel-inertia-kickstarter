@@ -2,19 +2,19 @@
 
 namespace App\Http\Middleware;
 
+use Application\Modules\Core\Permissions\Permission_Model;
+use Application\Modules\Core\Users\UserPermission_Model;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use Application\Modules\Core\Permissions\Models\Permission;
-use Application\Modules\Core\Users\Models\UserPermission;
 
 class AuthenticationGates
 {
     public function handle($request, Closure $next)
     {
 
-        $permissions = Permission::all()->pluck('name')->toArray();
-        $user_permissions = UserPermission::where(['user_id' => Auth::id(), 'status' => 1])
+        $permissions = Permission_Model::all()->pluck('name')->toArray();
+        $user_permissions = UserPermission_Model::where(['user_id' => Auth::id(), 'status' => 1])
             ->pluck('permission_name')->toArray();
 
 //        dd(Auth::user());
