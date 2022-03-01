@@ -80,11 +80,12 @@
                 {{item.parent}}
               </td>
               <td class="project-actions text-right">
-                <inertia-link class="btn btn-info btn-sm" :href="route('editPermission',[item.id])">
+                <inertia-link class="btn btn-info btn-sm" :href="route('editMenu',[item.id])">
                   <i class="fas fa-pencil-alt"></i>
                   Edit
                 </inertia-link>
-                <a class="btn btn-danger btn-sm" href="#">
+                <a class="btn btn-danger btn-sm" href="#" @click="item_id = item.id"
+                   data-toggle="modal" data-target="#delete_menu">
                   <i class="fas fa-trash">
                   </i>
                   Delete
@@ -95,14 +96,35 @@
           </table>
         </div>
       </div>
+
+      <custom-modal
+          :id="'delete_menu'"
+          :color="'danger'"
+          :title="'Delete Menu'"
+          :type="'sm'"
+      >
+
+        <template #body>
+          Are you sure you want to delete this menu?
+        </template>
+
+        <template #action_button>
+          <button type="button" class="btn btn-outline-light" @click="remove">
+            Yes, I am Sure
+          </button>
+        </template>
+
+      </custom-modal>
     </app-layout>
 </template>
 
 <script>
 import AppLayout from '@/Theme/Layouts/AppLayout'
+import CustomModal from "../../../Theme/Components/CustomModal";
 
 export default {
     components: {
+      CustomModal,
         AppLayout,
     },
     props: ['data', 'errors'],
@@ -159,7 +181,11 @@ export default {
             this.$inertia.post(route('deleteMenu'), {
                 id: this.item_id
             },{
-                onFinish: () => this.item_id = null
+                onFinish: () => {
+                  this.item_id = null
+                  $('#delete_menu_close').trigger('click');
+                  this.$inertia.visit(route('viewMenus'));
+                }
             });
         },
     }

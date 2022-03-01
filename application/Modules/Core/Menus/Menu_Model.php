@@ -72,6 +72,7 @@ class Menu_Model
     {
         $menu = [];
         $menu['id'] = $key;
+
         if (array_key_exists('menu_type',$values) && $values['menu_type'] == 'header') {
             $menu['link_type'] = 'header';
         } else {
@@ -92,7 +93,7 @@ class Menu_Model
             $module_directory_menus = json_decode($data, true);
             foreach ($module_directory_menus as $key => $values) {
                 $module_menus[$key] = $values;
-                $module_menus[$key]['module_type'] = str_replace(base_path('application/Modules'),'', $directory);
+                $module_menus[$key]['module_type'] = str_replace(base_path('application/Modules/'),'', $directory);
             }
             $menus = array_merge_recursive($menus, $module_menus);
         }
@@ -223,13 +224,82 @@ class Menu_Model
         file_put_contents($menu_file, json_encode($menus, JSON_PRETTY_PRINT));
     }
 
-    public static function create($data) {
+    public static function createOrUpdate($data) {
 
         if ($data['menu_type'] == 'module_menu') {
             self::saveModuleMenu($data);
         } else {
             self::saveNonModuleMenu($data);
         }
+    }
 
+    public static function getMenu($id) {
+
+        $menu = collect(Menu_Model::all(false))
+        ->where('id','=', $id)->first();
+
+        $module_info = explode('/',$menu['module_type']);
+        $key = $module_info[0];
+
+        if ($key == "") {
+            $menu_type = 'non_module_menu';
+            $module = "";
+            $module_group = "";
+        } else {
+            $menu_type = 'module_menu';
+            $module = $module_info[1];
+            if ($key == 'Core') {
+                $module_group = 'core';
+            } else {
+                $module_group = 'system';
+            }
+        }
+
+
+        return [
+            'name' => $id,
+            'title' => $menu['title'],
+            'icon' => $menu['icon'],
+            'link' => $menu['link'],
+            'permissions' => $menu['permissions'],
+            'parent' => $menu['parent'],
+            'module' => $module,
+            'module_group' => $module_group,
+            'menu_type' => $menu_type,
+            'position' => $menu['position'],
+        ];
+
+    }
+
+    public static function removeMenu($id) {
+        $data = self::getMenu($id);
+
+        if ($data['menu_type'] == 'module_menu') {
+            $module = $data['module'];
+            if ($data['module_group'] == 'core') {
+                $location = base_path('application/Modules/Core/' . $module);
+            } else {
+                $location = base_path('application/Modules/System/' . $module);
+            }
+
+        } else {
+            $location = base_path('application/Modules/');
+        }
+
+        $menu_file = $location . '/menu.json';
+
+        if (file_exists($menu_file)) {
+            $menu_content = file_get_contents($menu_file);
+            $menus = json_decode($menu_content, true);
+
+            $new_menus = [];
+            foreach ($menus as $menu => $items) {
+                if ($menu != $data['name']) {
+                    $new_menus[$data['name']] = $items;
+                }
+            }
+
+            file_put_contents($menu_file, json_encode($new_menus, JSON_PRETTY_PRINT));
+        }
     }
 }

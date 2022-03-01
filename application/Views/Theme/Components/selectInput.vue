@@ -3,7 +3,7 @@
     <label :for="field">
       {{ label }}
     </label>
-    <select class="form-control select2"
+    <select class="form-control select2" v-model="form[field]"
             :id="field" style="width: 100%;" :multiple="multiple">
       <option value="" selected="selected">-- Select {{ label }} --</option>
       <option :value="item[item_id]" v-for="(item, index) in items" :key="index">
