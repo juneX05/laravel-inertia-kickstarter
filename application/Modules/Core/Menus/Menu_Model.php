@@ -86,7 +86,8 @@ class Menu_Model
 
     private static function collectMenus($directory, $menus)
     {
-        $menu_file = $directory . '/menu.json';
+        $directory .= '/';
+        $menu_file = $directory . 'menu.json';
         if (file_exists($menu_file)) {
             $data = file_get_contents($menu_file);
             $module_menus = [];
@@ -115,7 +116,6 @@ class Menu_Model
                 $menus[$item[0]]['children'][$item[1]] = $old_menus[$item[0]]['children'][$item[1]];
             }
         }
-
         return $menus;
     }
 
@@ -137,12 +137,20 @@ class Menu_Model
 
     public function updateMenuPositions($menu_keys)
     {
-        $module_menus = self::getModuleMenus();
-        $count = count($menu_keys);
+        self::$processRoute = false;
+        $menus = collect(self::getModuleMenus()) -> mapWithKeys(
+            function ($menu) {
+                $id = $menu['id'];
+                return [$id => $menu];
+            }
+        );
+        $module_menus = $menus->all();
+        $count = count($module_menus);
+
         for($i = 0; $i < $count; $i++) {
             $key = $menu_keys[$i];
             $module = $module_menus[$key];
-            $menu_file = base_path('application/Modules'. $module['module_type']) . "/menu.json";
+            $menu_file = base_path('application/Modules/'. $module['module_type']) . "/menu.json";
             $menu = json_decode(file_get_contents($menu_file), true);
             $menu[$key]['position'] = $i + 1;
 
@@ -295,7 +303,7 @@ class Menu_Model
             $new_menus = [];
             foreach ($menus as $menu => $items) {
                 if ($menu != $data['name']) {
-                    $new_menus[$data['name']] = $items;
+                    $new_menus[$menu] = $items;
                 }
             }
 
