@@ -43,26 +43,21 @@ class Menu_Model
         return $menus;
     }
 
-    private static function processSidebarMenus($key, $values)
+    private static function processSidebarMenus($key, $values, &$menus)
     {
-        $menus = [];
         if (isset($values['parent']) && $values['parent'] != null) {
-            if (isset($menus[$values['parent']])) {
-                if (isset($menus[$values['parent']]['children'])) {
-                    $menus[$values['parent']]['children'][] = $values;
-                } else {
-                    $menus[$values['parent']]['children'] = [];
-                    $menus[$values['parent']]['children'][$key] = $values;
-                }
-            } else {
-                $menus[$values['parent']] = [];
-                $menus[$values['parent']]['children'] = [];
-                $menus[$values['parent']]['children'][$key] = $values;
-                $key = $values['parent'].'.'.$key;
-            }
-        } else {
-            $menus[$key] = $values;
+//            if (isset($menus[$values['parent']])) {
+//                if (!isset($menus[$values['parent']]['children'])) {
+//                    $menus[$values['parent']]['children'] = [];
+//                }
+//            } else {
+//                $menus[$values['parent']] = [];
+//                $menus[$values['parent']]['children'] = [];
+//            }
+//            $menus[$values['parent']]['children'][$key] = $values;
+            $key = $values['parent'].'.'.$key;
         }
+        $menus[$key] = $values;
         self::$keys[$key] = $values['position'] ?? 1000;
 
         return $menus;
@@ -111,9 +106,15 @@ class Menu_Model
             $item = explode('.', $key);
             $item_length = count($item);
             if ($item_length == 1) {
-                $menus[$key] = $old_menus[$key];
+                if (!isset($menus[$key])){
+                    $menus[$key] = $old_menus[$key];
+                }
+                $menus[$key] = array_merge($old_menus[$key], $menus[$key]);
             } else {
-                $menus[$item[0]]['children'][$item[1]] = $old_menus[$item[0]]['children'][$item[1]];
+                if (!isset($menus[$item[0]]['children'])) {
+                    $menus[$item[0]]['children'] = [];
+                }
+                $menus[$item[0]]['children'][$item[1]] = $old_menus[$key];
             }
         }
         return $menus;
@@ -125,10 +126,10 @@ class Menu_Model
         foreach ($sorted_menus as $key => $values) {
             $values = self::processMenusList($key, $values);
             if (self::$processRoute) {
-                $values = self::processSidebarMenus($key, $values);
-                $menus = array_merge_recursive($values, $menus);
+                $menus = self::processSidebarMenus($key, $values, $menus);
+//                $menus = array_merge_recursive($menus, $values);
             } else {
-                $menus = array_merge_recursive([$values], $menus);
+                $menus = array_merge_recursive( $menus, [$values]);
             }
         }
 
