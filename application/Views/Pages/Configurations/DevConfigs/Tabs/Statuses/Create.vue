@@ -1,58 +1,42 @@
 <template>
-    <app-layout>
-        <template #bread-crumbs>
-            <inertia-link :href="route('home')" style="text-decoration: none">
-                <v-icon size="16" style="margin-top: -2px">home</v-icon>
-            </inertia-link>
-            /
-            <inertia-link :href="route('viewStatuses')" style="text-decoration: none">
-                Statuses List
-            </inertia-link>
-            <span class="text-md">
-                / Create Status
-            </span>
+    <dev-configs-index>
 
-            <br/>
-            <inertia-link :href="route('viewStatuses')" as="v-btn" class="mt-2" small style="text-decoration: none">
-                <v-icon>arrow_back</v-icon>
-                Back
-            </inertia-link>
-        </template>
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Statuses
-            </h2>
-        </template>
+      <div class="card card-primary">
+        <div class="card-header">
+          <h3 class="card-title">
+            New Status
+          </h3>
+          <div class="card-tools">
 
-        <v-row align="center" align-content="center" justify="center">
-            <v-col cols="8">
-                <v-card class="mt-2">
-                    <v-card-title>
-                        Create New Status
-                    </v-card-title>
-                    <v-card-text class="pb-0">
-                        <status-form
-                          :errors="errors"
-                          :form="form"
-                        ></status-form>
-                    </v-card-text>
-                    <v-card-actions class="pt-0">
-                        <v-btn :loading="loading" dark @click="submit">Save Status</v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-col>
+          </div>
+        </div>
+        <div class="card-body">
+          <status-form
+              :errors="errors"
+              :form="form"
+          ></status-form>
+        </div>
 
-        </v-row>
+        <div class="card-footer">
+          <button class="btn btn-primary" @click="submit">
+            Save Status
+          </button>
+        </div>
 
-    </app-layout>
+      </div>
+
+
+    </dev-configs-index>
 </template>
 
 <script>
 import AppLayout from '@/Theme/Layouts/AppLayout'
 import StatusForm from "@/Pages/Configurations/DevConfigs/Tabs/Statuses/statusForm";
+import DevConfigsIndex from "../../DevConfigsIndex";
 
 export default {
     components: {
+      DevConfigsIndex,
       StatusForm,
         AppLayout,
     },
@@ -62,8 +46,8 @@ export default {
             drawer: null,
             form: this.$inertia.form({
                 name: '',
-                abbreviation: '',
-                symbol: '',
+                id: '',
+                color: '',
             }),
             loading:false
         }

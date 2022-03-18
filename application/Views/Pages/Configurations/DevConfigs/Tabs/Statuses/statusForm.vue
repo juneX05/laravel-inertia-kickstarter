@@ -1,5 +1,5 @@
 <template>
-  <v-form>
+  <form>
     <textInput
         :errors="errors"
         :field="'name'"
@@ -10,21 +10,21 @@
     ></textInput>
     <textInput
         :errors="errors"
-        :field="'abbreviation'"
+        :field="'id'"
         :form="form"
-        :hint="'Status Abbreviation'"
-        :label="'Status Abbreviation'"
-        :type="'text'"
+        :hint="'Status ID'"
+        :label="'Status ID'"
+        :type="'number'"
     ></textInput>
     <textInput
         :errors="errors"
-        :field="'symbol'"
+        :field="'color'"
         :form="form"
-        :hint="'Status Symbol'"
-        :label="'Status Symbol'"
+        :hint="'Status Color'"
+        :label="'Status Color'"
         :type="'text'"
     ></textInput>
-  </v-form>
+  </form>
 </template>
 
 <script>
@@ -45,9 +45,7 @@ export default {
   props: ['errors','form'],
   data() {
     return {
-      room_types: [],
-      room_categories: [],
-      room_amenities: [],
+
     }
   }
 }

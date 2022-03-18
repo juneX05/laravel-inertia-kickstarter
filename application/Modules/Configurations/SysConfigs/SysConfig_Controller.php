@@ -22,7 +22,7 @@ class SysConfig_Controller extends Controller
             ['title' => 'Room Prices', 'key' => 'room_prices'],
         ];
 
-        return $this->render('Index', [
+        return $this->render('SysConfigIndex', [
             'tabs' => $tabs,
             'default_tab' => 'amenities'
         ]);

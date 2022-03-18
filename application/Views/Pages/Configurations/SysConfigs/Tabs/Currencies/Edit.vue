@@ -1,58 +1,48 @@
 <template>
-    <app-layout>
-      <template #bread-crumbs>
-        <inertia-link :href="route('home')" style="text-decoration: none">
-          <v-icon size="16" style="margin-top: -2px">home</v-icon>
-        </inertia-link>
-        /
-        <inertia-link :href="route('viewCurrencies')" style="text-decoration: none">
-          Currencies List
-        </inertia-link>
-        <span class="text-md">
-                / Edit Currency
-            </span>
+    <sys-config-index>
 
-        <br/>
-        <inertia-link :href="route('viewCurrencies')" as="v-btn" class="mt-2" small style="text-decoration: none">
-          <v-icon>arrow_back</v-icon>
-          Back
-        </inertia-link>
-      </template>
-      <template #header>
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-          Currencies
-        </h2>
-      </template>
+      <div class="card card-primary">
+        <div class="card-header">
+          <h3 class="card-title">
+            New Currency
+          </h3>
+          <div class="card-tools">
 
-        <v-row align="center" align-content="center" justify="center">
-            <v-col cols="8">
-                <v-card class="mt-2">
-                    <v-card-title>
-                        EDIT Currency
-                    </v-card-title>
-                    <v-card-text class="pb-0">
-                        <currency-form
-                          :errors="errors"
-                          :form="form"
-                        ></currency-form>
-                    </v-card-text>
-                    <v-card-actions class="pt-0">
-                        <v-btn :loading="loading" dark @click="submit">Update Currency</v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-col>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <label for="name"> Name</label>
+            <input type="text" id="name" v-model="form.name" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="abbreviation"> Abbreviation</label>
+            <input type="text" id="abbreviation" v-model="form.abbreviation" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="symbol"> Symbol</label>
+            <input type="text" id="symbol" v-model="form.symbol" class="form-control">
+          </div>
+        </div>
 
-        </v-row>
+        <div class="card-footer">
+          <button class="btn btn-primary" @click="submit">
+            Update Currency
+          </button>
+        </div>
 
-    </app-layout>
+      </div>
+    </sys-config-index>
 </template>
 
 <script>
 import AppLayout from '@/Theme/Layouts/AppLayout'
 import CurrencyForm from "@/Pages/Configurations/SysConfigs/Tabs/Currencies/currencyForm";
+import SysConfigIndex from "../../SysConfigIndex";
 
 export default {
     components: {
+      SysConfigIndex,
       CurrencyForm,
         AppLayout,
     },

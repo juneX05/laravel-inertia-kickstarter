@@ -21,7 +21,7 @@ class Status_Controller extends Controller
     }
 
     public function render($component, $props) {
-        return Inertia::render('Configurations/DevConfigs/Tabs/Statuses/Views/' . $component, $props);
+        return Inertia::render('Configurations/DevConfigs/Tabs/Statuses/' . $component, $props);
     }
 
     public function create() {
@@ -43,8 +43,8 @@ class Status_Controller extends Controller
 
         Validator::make($request->all(), [
             'name' => ['required'],
-            'abbreviation' => ['required'],
-            'symbol' => ['nullable'],
+            'id' => ['required'],
+            'color' => ['nullable'],
         ])->validate();
 
         Status_Model::create($request->all());
@@ -58,14 +58,14 @@ class Status_Controller extends Controller
         abort_if(Gate::denies('status.edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         Validator::make($request->all(), [
-            'id' => ['required'],
+            'key_id' => ['required'],
             'name' => ['required'],
-            'abbreviation' => ['required'],
-            'symbol' => ['nullable'],
+            'id' => ['required'],
+            'color' => ['nullable'],
         ])->validate();
 
-        if ($request->has('id')) {
-            Status_Model::find($request->input('id'))->update($request->all());
+        if ($request->has('key_id')) {
+            Status_Model::find($request->input('key_id'))->update($request->all());
 
             return redirect()->back()
                 ->with('message', 'Statuses Updated Successfully.');

@@ -14,7 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+Route::middleware(['auth:sanctum', 'verified'])
+    ->prefix('/dev-configs')
+    ->group(function () {
 
     Route::get('/statuses', [Status_Controller::class,'index'])->name('viewStatuses');
     Route::get('/statuses/create', [Status_Controller::class,'create'])->name('createStatus');

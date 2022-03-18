@@ -17,7 +17,7 @@ class DevConfigs_Seeder extends Seeder
         $this->setUpPermissions();
 
         $seeders = [
-            'Application\Modules\Configurations\DevConfigs\Tabs\Statuses_Seeder',
+            'Application\Modules\Configurations\DevConfigs\Tabs\Statuses\Statuses_Seeder',
         ];
 
         $this->call($seeders);

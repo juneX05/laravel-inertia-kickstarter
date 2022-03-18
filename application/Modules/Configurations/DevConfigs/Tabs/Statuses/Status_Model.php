@@ -11,7 +11,7 @@ class Status_Model extends Model
 
     protected $table = 'statuses';
     protected $fillable = [
-        'name', 'symbol', 'abbreviation', 'base', 'rate'
+        'name', 'id', 'color',
     ];
 
     public function getTableColumns() {

@@ -19,7 +19,7 @@ class DevConfig_Controller extends Controller
             
         ];
 
-        return $this->render('Index', [
+        return $this->render('DevConfigsIndex', [
             'tabs' => $tabs,
             'default_tab' => ''
         ]);

@@ -17,7 +17,7 @@ class SysConfigs_Seeder extends Seeder
         $this->setUpPermissions();
 
         $seeders = [
-            'Application\Modules\Configurations\SysConfigs\Tabs\Currencies_Seeder',
+            'Application\Modules\Configurations\SysConfigs\Tabs\Currencies\Currencies_Seeder',
         ];
 
         $this->call($seeders);

@@ -1,85 +1,105 @@
 <template>
-    <app-layout>
-        <template #bread-crumbs>
-            <inertia-link :href="route('home')" style="text-decoration: none">
-                <v-icon size="16" style="margin-top: -2px">home</v-icon>
+    <dev-configs-index>
+
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">All Statuses</h3>
+          <div class="card-tools">
+            <inertia-link class="btn btn-primary btn-sm" :href="route('createStatus')">
+              <i class="fa fa-plus "></i>
+              Add Status
             </inertia-link>
-            <span class="text-md">
-                / Statuses List
-            </span>
+          </div>
+        </div>
+        <div class="card-body p-0">
+          <table class="table table-striped projects">
+            <thead>
+            <tr>
+              <th style="width: 1%">
+                #
+              </th>
+              <th style="width: 20%">
+                Name
+              </th>
+              <th style="width: 20%">
+                ID
+              </th>
+              <th style="width: 20%">
+                Color
+              </th>
+              <th style="width: 30%">
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="(item, index) in data" :key="index">
+              <td>
+                #
+              </td>
+              <td>
+                <a>
+                  {{ item.name }}
+                </a>
+                <br />
+                <small>
+                  Created {{ item.created_at }}
+                </small>
+              </td>
+              <td>
+                {{item.id}}
+              </td>
+              <td>
+                {{item.color}}
+              </td>
+              <td class="project-actions text-right">
+                <inertia-link class="btn btn-info btn-sm" :href="route('editStatus',[item.id])">
+                  <i class="fas fa-pencil-alt"></i>
+                  Edit
+                </inertia-link>
+                <a class="btn btn-danger btn-sm" href="#" @click="item_id = item.id"
+                   data-toggle="modal" data-target="#delete_status">
+                  <i class="fas fa-trash">
+                  </i>
+                  Delete
+                </a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
 
+      <custom-modal
+          :id="'delete_status'"
+          :color="'danger'"
+          :title="'Delete Status'"
+          :type="'sm'"
+      >
+
+        <template #body>
+          Are you sure you want to delete this Status?
         </template>
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Statuses
-            </h2>
+
+        <template #action_button>
+          <button type="button" class="btn btn-outline-light" @click="remove">
+            Yes, I am Sure
+          </button>
         </template>
 
-        <v-col cols="12">
-            <v-row>
-                <v-col cols="12">
-                    <inertia-link :href="route('createStatus')" as="v-btn" class="float-end" small>
-                        <v-icon>add</v-icon>
-                        Add Status
-                    </inertia-link>
-                </v-col>
-            </v-row>
-            <div class="mt-3">
-                <v-data-table v-if="data.length > 0"
-                              :headers="headers"
-                              :items="data"
-                              class="elevation-1"
-                              item-key="id"
-                >
-                    <template v-slot:item.SNO = "{ index }">
-                        {{ index + 1 }}
-                    </template>
-                    <template v-slot:item.actions="{ item }">
-                        <div v-if="item_id == null ">
-                            <inertia-link :href="route('editStatus',[item.id])" as="v-icon" class="mr-2" small>
-                                mdi-pencil
-                            </inertia-link>
-                            <v-icon
-                                small
-                                @click="item_id = item.id"
-                            >
-                                mdi-delete
-                            </v-icon>
-                        </div>
+      </custom-modal>
 
-                        <div v-if="item_id != null && item_id == item.id" class="mt-5 mb-5">
-
-                            <v-row justify="center">
-                                <b>Are you sure you want to DELETE this item?</b>
-                            </v-row>
-                            <v-row justify="end">
-
-                                <v-btn dark small @click="item_id = null">No</v-btn>
-                                <v-spacer></v-spacer>
-                                <v-btn small @click="remove">I'm Sure</v-btn>
-                            </v-row>
-                        </div>
-                    </template>
-                </v-data-table>
-                <v-card v-else>
-                    <v-card-text>
-                        <v-icon>warning</v-icon>
-                        <p>
-                            No Data Available for this table
-                        </p>
-                    </v-card-text>
-                </v-card>
-            </div>
-        </v-col>
-
-    </app-layout>
+    </dev-configs-index>
 </template>
 
 <script>
 import AppLayout from '@/Theme/Layouts/AppLayout'
+import DevConfigsIndex from "../../DevConfigsIndex";
+import CustomModal from "../../../../../Theme/Components/CustomModal";
 
 export default {
     components: {
+      CustomModal,
+      DevConfigsIndex,
         AppLayout,
     },
     props: ['data', 'errors'],
@@ -90,22 +110,6 @@ export default {
         return {
             item_id: null,
             drawer: null,
-            headers: [
-                { text: 'SNO', value: 'SNO', sortable: false },
-                {
-                    text: 'Name', align: 'start',
-                    sortable: true, value: 'name',
-                },
-                {
-                    text: 'Abbreviation', align: 'start',
-                    sortable: true, value: 'abbreviation',
-                },
-                {
-                    text: 'Symbol', align: 'start',
-                    sortable: true, value: 'symbol',
-                },
-                { text: 'Actions', value: 'actions', sortable: false },
-            ]
         }
     },
 
@@ -124,7 +128,10 @@ export default {
             this.$inertia.post(route('deleteStatus'), {
                 id: this.item_id
             },{
-                onFinish: () => this.item_id = null
+              onFinish: () => {
+                this.item_id = null;
+                $('#delete_status').trigger('click');
+              }
             });
         },
     }

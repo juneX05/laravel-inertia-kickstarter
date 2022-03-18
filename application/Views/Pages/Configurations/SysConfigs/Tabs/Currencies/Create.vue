@@ -1,58 +1,50 @@
 <template>
-    <app-layout>
-        <template #bread-crumbs>
-            <inertia-link :href="route('home')" style="text-decoration: none">
-                <v-icon size="16" style="margin-top: -2px">home</v-icon>
-            </inertia-link>
-            /
-            <inertia-link :href="route('viewCurrencies')" style="text-decoration: none">
-                Currencies List
-            </inertia-link>
-            <span class="text-md">
-                / Create Currency
-            </span>
+    <sys-config-index>
 
-            <br/>
-            <inertia-link :href="route('viewCurrencies')" as="v-btn" class="mt-2" small style="text-decoration: none">
-                <v-icon>arrow_back</v-icon>
-                Back
-            </inertia-link>
-        </template>
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Currencies
-            </h2>
-        </template>
 
-        <v-row align="center" align-content="center" justify="center">
-            <v-col cols="8">
-                <v-card class="mt-2">
-                    <v-card-title>
-                        Create New Currency
-                    </v-card-title>
-                    <v-card-text class="pb-0">
-                        <currency-form
-                          :errors="errors"
-                          :form="form"
-                        ></currency-form>
-                    </v-card-text>
-                    <v-card-actions class="pt-0">
-                        <v-btn :loading="loading" dark @click="submit">Save Currency</v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-col>
+      <div class="card card-primary">
+        <div class="card-header">
+          <h3 class="card-title">
+            New Currency
+          </h3>
+          <div class="card-tools">
 
-        </v-row>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <label for="name"> Name</label>
+            <input type="text" id="name" v-model="form.name" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="abbreviation"> Abbreviation</label>
+            <input type="text" id="abbreviation" v-model="form.abbreviation" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="symbol"> Symbol</label>
+            <input type="text" id="symbol" v-model="form.symbol" class="form-control">
+          </div>
+        </div>
 
-    </app-layout>
+        <div class="card-footer">
+          <button class="btn btn-primary" @click="submit">
+            Save Currency
+          </button>
+        </div>
+
+      </div>
+
+    </sys-config-index>
 </template>
 
 <script>
 import AppLayout from '@/Theme/Layouts/AppLayout'
 import CurrencyForm from "@/Pages/Configurations/SysConfigs/Tabs/Currencies/currencyForm";
+import SysConfigIndex from "../../SysConfigIndex";
 
 export default {
     components: {
+      SysConfigIndex,
       CurrencyForm,
         AppLayout,
     },
@@ -60,11 +52,7 @@ export default {
     data() {
         return {
             drawer: null,
-            form: this.$inertia.form({
-                name: '',
-                abbreviation: '',
-                symbol: '',
-            }),
+            form: {},
             loading:false
         }
     },
@@ -72,13 +60,13 @@ export default {
     methods: {
         submit() {
             this.loading = true;
-            this.form
+          this.$inertia.form(this.form)
                 .transform(data => ({
                     ... data,
                 }))
                 .post(this.route('saveCurrency'), {
                     onSuccess: () => {
-                        this.form.reset();
+                      this.form = {};
                         this.$inertia.visit(route('viewCurrencies'))
                     },
                     onError: () => {
